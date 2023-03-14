@@ -34,9 +34,13 @@ typedef struct {
   /* In NEMU, rtlreg_t is exactly uint32_t. This makes RTL instructions
    * in PA2 able to directly access these registers.
    */
+  // add a struct to "eax, ecx, edx,..."  make it can use .eax to visit eax
+  // else it will "error" like this "nemu: src/cpu/reg.c:34: reg_test: Assertion `sample[R_ECX] == cpu.ecx' failed."
+
   struct{
     rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;};
   };
+  
   vaddr_t eip;
 
 } CPU_state;
