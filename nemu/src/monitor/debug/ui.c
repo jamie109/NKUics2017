@@ -74,6 +74,24 @@ static int cmd_info(char *args){
   return 0;
 }
 
+static int cmd_x(char *args){  
+    char *arg1=strtok(NULL," ");  
+    char *arg2=strtok(NULL," ");  
+    int len;  
+    vaddr_t address;  
+      
+    sscanf(arg1,"%d",&len);  
+    sscanf(arg2,"%x",&address);  
+      
+    printf("0x%x:",address);  
+    for(int i=0;i<len;i++){  
+        printf("%x ",vaddr_read(address,4));  
+        address+=4;  
+    }  
+    printf("\n");  
+    return 0;  
+}  
+
 static struct {
   char *name;
   char *description;
@@ -86,6 +104,7 @@ static struct {
   /* TODO: Add more commands */
   {"si", "Pause execution after stepping N instructions, When N is not given, the default is 1", cmd_si},
   {"info", "Output the values of all regs.", cmd_info},
+  {"x", "Scan memory", cmd_x},
 
 };
 // the number of cmd
