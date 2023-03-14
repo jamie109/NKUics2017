@@ -83,12 +83,12 @@ static int cmd_x(char *args){
     sscanf(arg1,"%d",&len);  
     sscanf(arg2,"%x",&address);  
       
-    printf("0x%x:",address);  
     for(int i=0;i<len;i++){  
-        printf("%x ",vaddr_read(address,4));  
-        address+=4;  
-    }  
-    printf("\n");  
+      printf("0x%x:\t",address);  
+      printf("%x ",vaddr_read(address,4));  
+      printf("\n");
+      address+=4;  
+    }    
     return 0;  
 }  
 
