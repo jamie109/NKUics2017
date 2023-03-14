@@ -44,8 +44,22 @@ static int cmd_si(char *args){
   // if N exists
   if(args != NULL)
     sscanf(args, "%d", &num);
-    
+
 	cpu_exec(num);
+  return 0;
+}
+
+static int cmd_info(char *args){
+  //info r
+  char s[5];
+  if(args != NULL){
+    int n = sscanf(args, "%s",s);
+    //if s =="r" print regs
+    if(n == 1 && strcmp(s, "r") == 0) 
+      for(int i = 0; i < 8; i++)
+        printf("%s %x\n",regsl[i],cpu.gpr[i]._32);
+
+  }
   return 0;
 }
 
@@ -60,6 +74,7 @@ static struct {
 
   /* TODO: Add more commands */
   {"si", "Pause execution after stepping N instructions, When N is not given, the default is 1", cmd_si},
+  {"info", "Output the values of all regs.", cmd_info},
 
 };
 // the number of cmd
