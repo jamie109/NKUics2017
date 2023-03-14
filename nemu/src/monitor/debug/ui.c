@@ -38,6 +38,17 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args){
+  // default is 1
+	int num = 1;
+  // if N exists
+  if(args != NULL)
+    sscanf(args, "%d", &num);
+    
+	cpu_exec(num);
+  return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -48,9 +59,10 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
+  {"si", "Pause execution after stepping N instructions, When N is not given, the default is 1", cmd_si},
 
 };
-
+// the number of cmd
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
 static int cmd_help(char *args) {

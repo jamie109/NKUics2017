@@ -223,6 +223,8 @@ static inline void update_eip(void) {
   cpu.eip = (decoding.is_jmp ? (decoding.is_jmp = 0, decoding.jmp_eip) : decoding.seq_eip);
 }
 
+// the parameter "print_flag" is from function "cpu_exec"
+// bool print_flag = n < MAX_INSTR_TO_PRINT;
 void exec_wrapper(bool print_flag) {
 #ifdef DEBUG
   decoding.p = decoding.asm_buf;
