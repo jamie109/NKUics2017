@@ -19,7 +19,7 @@ enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
  * cpu.gpr[1]._8[1], we will get the 'ch' register. Hint: Use `union'.
  * For more details about the register encoding scheme, see i386 manual.
  */
-
+// finished!!!
 typedef struct {
   // EAX AX AH+AL use the same memory space
   union {//gpr[8] and "rtlreg_t eax, ecx, edx, ......" are the same thing(8 regs) so add another union
@@ -40,7 +40,7 @@ typedef struct {
   struct{
     rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;};
   };
-  
+
   vaddr_t eip;
 
 } CPU_state;
