@@ -77,17 +77,17 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){  
     char *arg1=strtok(NULL," ");  
     char *arg2=strtok(NULL," ");  
-    int len;  
+    int n;  
     vaddr_t address;  
-      
-    sscanf(arg1,"%d",&len);  
+    // N start_address
+    sscanf(arg1,"%d",&n);  
     sscanf(arg2,"%x",&address);  
       
-    for(int i=0;i<len;i++){  
-      printf("0x%x:\t",address);  
-      printf("%x ",vaddr_read(address,4));  
+    for(int i = 0; i < n; i++){  
+      printf("0x%x:\t", address);  
+      printf("%x ", vaddr_read(address,4));  
       printf("\n");
-      address+=4;  
+      address += 4;  
     }    
     return 0;  
 }  
