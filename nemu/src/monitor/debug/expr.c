@@ -177,7 +177,8 @@ static bool make_token(char *e) {
             // t.str[1] = '\0';
             // tokens[nr_token] = t;
             tokens[nr_token].type = TK_RP;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            strncpy(tokens[nr_token].str, substr_start, substr_len + 1);
+            // tokens[nr_token].str[substr_start + substr_len] = '\0';
             printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             nr_token += 1;
             break;
@@ -188,6 +189,7 @@ static bool make_token(char *e) {
             // int j = 0;
             tokens[nr_token].type = TK_DEC;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // tokens[nr_token].str[ substr_start + substr_len] = '\0';
             printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             // for (j = 0; j < substr_len; j++) {
             //   t.str[j] = *(substr_start + j);
@@ -198,7 +200,7 @@ static bool make_token(char *e) {
             break;
           }
           case TK_NOTYPE: {
-            Log("@ oh it is blank ignore it");
+            // printf("@ oh it is blank ignore it");
             break;
           }
           default: TODO();
@@ -213,7 +215,7 @@ static bool make_token(char *e) {
       return false;
     }
   }
-  Log("that is all, what a happy match trip!!");
+  printf("that is all, what a happy match trip ^-^~~");
   return true;
 }
 
