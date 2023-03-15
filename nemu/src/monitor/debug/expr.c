@@ -213,9 +213,8 @@ static bool make_token(char *e) {
       return false;
     }
   }
-
-  return true;
   Log("that is all, what a happy match trip!!");
+  return true;
 }
 
 void for_expr_test( char *e){
