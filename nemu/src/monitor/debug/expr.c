@@ -49,6 +49,11 @@ void init_regex() {
   int ret;
 
   for (i = 0; i < NR_REGEX; i ++) {
+    // 将一个正则表达式编译成一个模式缓冲区（pattern buffer），使得该正则表达式可以被快速匹配
+    /*preg是一个指向regex_t结构体的指针，该结构体保存了编译后的正则表达式模式信息。
+    regex是一个指向C字符串的指针，表示待编译的正则表达式。
+    cflags是编译标志，用于指定编译正则表达式时的选项。
+    如果编译成功，该函数返回0*/
     ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
     if (ret != 0) {
       regerror(ret, &re[i], error_msg, 128);
@@ -64,19 +69,29 @@ typedef struct token {
 
 Token tokens[32];
 int nr_token;
-
+// 识别出其中的token
 static bool make_token(char *e) {
   int position = 0;
   int i;
+  // regmatch_t结构体用于存储与正则表达式匹配的子串在目标字符串中的位置信息，包括其起始位置和结束位置
+  /*
+  typedef struct {
+    regoff_t rm_so; // 匹配子串在目标字符串中的起始位置
+    regoff_t rm_eo; // 匹配子串在目标字符串中的结束位置
+  } regmatch_t;
+  */
   regmatch_t pmatch;
 
   nr_token = 0;
-
+  
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
+      // 对于输入字符串 e 中，从 position 开始的子串，是否能够使用第 i 个正则表达式进行匹配，并且匹配到的子串是否在输入字符串的起始位置
+      // pmatch.rm_so为0表示匹配到的子串在输入字符串的起始位置
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
+        // 子串 len
         int substr_len = pmatch.rm_eo;
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
@@ -92,7 +107,7 @@ static bool make_token(char *e) {
           printf("Error: too long for a token.\n");
           assert(0);
         }
-
+        // 可以匹配了，接下来将识别出的 token 信息记录下来
         switch (rules[i].token_type) {
            case TK_ADD: {
             Token t;
