@@ -112,6 +112,7 @@ static bool make_token(char *e) {
 					tokens[nr_token].str[j] = '\0';
 				}
         // 可以匹配了，接下来将识别出的 token 信息记录下来
+        // 
         switch (rules[i].token_type) {
            case TK_ADD: {
             tokens[nr_token].type = TK_ADD;
