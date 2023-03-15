@@ -116,7 +116,7 @@ static bool make_token(char *e) {
            case TK_ADD: {
             tokens[nr_token].type = TK_ADD;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            printf("match %s its tpye num is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            printf("@ match %s its tpye num is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             // Token t;
             // t.type = TK_ADD;
             // t.str[0] = '+';
