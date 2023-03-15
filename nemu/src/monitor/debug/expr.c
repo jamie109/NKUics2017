@@ -215,13 +215,13 @@ static bool make_token(char *e) {
       return false;
     }
   }
-  printf("that is all, what a happy match trip ^-^~~\n");
+  // printf("that is all, what a happy match trip ^-^~~\n");
   return true;
 }
 
 void for_expr_test( char *e){
   if (make_token(e)== true){
-    printf("make_token success!!");
+    printf("@ from for_expr_test funct make_token success!!!\n");
   }
 }
 // 判断表达式是否被一对匹配的括号包围着,同时检查表达式的左右括号是否匹配
