@@ -7,9 +7,11 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ
-
+  // 空格串 TK_NOTYPE
+  TK_NOTYPE = 256, TK_EQ,
   /* TODO: Add more token types */
+  TK_ADD, TK_SUB, TK_MUL, TK_DIV,
+  TK_LP, TK_RP,TK_DEC
 
 };
 
@@ -23,8 +25,15 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
-  {"==", TK_EQ}         // equal
+  {"\\+", TK_ADD},      // plus
+  {"==", TK_EQ},        // equal
+  // my regex and token
+  {"\\-", TK_SUB},      // sub
+  {"\\*", TK_MUL},      // mul
+  {"/", TK_DIV},        // divide
+  {"\\(", TK_LP},       // (
+  {"\\)", TK_RP},       // )
+  {"[1-9][0-9]*|0", TK_DEC}, // decimal
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -78,8 +87,82 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
+        // token.str lenth is 32 end with \0
+        if (substr_len > 31) {
+          printf("Error: too long for a token.\n");
+          assert(0);
+        }
 
         switch (rules[i].token_type) {
+           case TK_ADD: {
+            Token t;
+            t.type = TK_ADD;
+            t.str[0] = '+';
+            t.str[1] = '\0';
+            tokens[nr_token] = t;
+            nr_token += 1;
+            break;
+          }
+          case TK_SUB: {
+            Token t;
+            t.type = TK_SUB;
+            t.str[0] = '-';
+            t.str[1] = '\0';
+            tokens[nr_token] = t;
+            nr_token += 1;
+            break;
+          }
+          case TK_MUL: {
+            Token t;
+            t.type = TK_MUL;
+            t.str[0] = '*';
+            t.str[1] = '\0';
+            tokens[nr_token] = t;
+            nr_token += 1;
+            break;
+          }
+          case TK_DIV: {
+            Token t;
+            t.type = TK_DIV;
+            t.str[0] = '/';
+            t.str[1] = '\0';
+            tokens[nr_token] = t;
+            nr_token += 1;
+            break;
+          }
+          case TK_LP: {
+            Token t;
+            t.type = TK_LP;
+            t.str[0] = '(';
+            t.str[1] = '\0';
+            tokens[nr_token] = t;
+            nr_token += 1;
+            break;
+          }
+          case TK_RP: {
+            Token t;
+            t.type = TK_RP;
+            t.str[0] = ')';
+            t.str[1] = '\0';
+            tokens[nr_token] = t;
+            nr_token += 1;
+            break;
+          }
+          case TK_DEC: {
+            Token t;
+            t.type = TK_DEC;
+            int j = 0;
+            for (j = 0; j < substr_len; j++) {
+              t.str[j] = *(substr_start + j);
+            }
+            t.str[j] = '\0';
+            tokens[nr_token] = t;
+            nr_token++;
+            break;
+          }
+          case TK_NOTYPE: {
+            break;
+          }
           default: TODO();
         }
 
@@ -104,6 +187,16 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   TODO();
-
+  // *success = true;
+  // for (int i = 0; i < nr_token; i++) {
+  //   if (tokens[i].type == TK_MIN && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type  != TK_HEX && tokens[i - 1].type  != TK_REG))) {
+  //     tokens[i].type = TK_NEG;
+  //   }
+  //   else if (tokens[i].type == TK_MUL && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type  != TK_HEX && tokens[i - 1].type  != TK_REG && tokens[i - 1].type != TK_RP))) {
+  //     tokens[i].type = TK_POI;
+  //   }
+  // }
+  // int p = 0, q = nr_token - 1;
+  // int value = evaluate(p, q);
   return 0;
 }
