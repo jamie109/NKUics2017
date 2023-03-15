@@ -102,7 +102,7 @@ static int cmd_t(char *args){
   // uint32_t res = expr(arg, &success);
   // bool flag = make_token(arg);
   for_expr_test(arg);
-  printf("@from ui.c cmd_t function.\n ");  
+  printf("@ from ui.c cmd_t function.\n ");  
 
   return 0;
 }

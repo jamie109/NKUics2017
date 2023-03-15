@@ -177,7 +177,7 @@ static bool make_token(char *e) {
             // t.str[1] = '\0';
             // tokens[nr_token] = t;
             tokens[nr_token].type = TK_RP;
-            strncpy(tokens[nr_token].str, substr_start, substr_len + 1);
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
             // tokens[nr_token].str[substr_start + substr_len] = '\0';
             printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             nr_token += 1;
@@ -215,7 +215,7 @@ static bool make_token(char *e) {
       return false;
     }
   }
-  printf("that is all, what a happy match trip ^-^~~");
+  printf("that is all, what a happy match trip ^-^~~\n");
   return true;
 }
 
