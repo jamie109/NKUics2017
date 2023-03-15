@@ -112,7 +112,7 @@ static bool make_token(char *e) {
            case TK_ADD: {
             tokens[nr_token].type = TK_ADD;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            Log("@ match %s its tpye is %d", tokens[nr_token].str, tokens[nr_token].type);
+            printf("match %s its tpye num is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             // Token t;
             // t.type = TK_ADD;
             // t.str[0] = '+';
@@ -124,7 +124,7 @@ static bool make_token(char *e) {
           case TK_SUB: {
             tokens[nr_token].type = TK_SUB;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            Log("@ match %s its tpye is %d", tokens[nr_token].str, tokens[nr_token].type);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             // Token t;
             // t.type = TK_SUB;
             // t.str[0] = '-';
@@ -136,7 +136,7 @@ static bool make_token(char *e) {
           case TK_MUL: {
             tokens[nr_token].type = TK_MUL;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            Log("@ match %s its tpye is %d", tokens[nr_token].str, tokens[nr_token].type);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             // Token t;
             // t.type = TK_MUL;
             // t.str[0] = '*';
@@ -148,7 +148,7 @@ static bool make_token(char *e) {
           case TK_DIV: {
             tokens[nr_token].type = TK_DIV;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            Log("@ match %s its tpye is %d", tokens[nr_token].str, tokens[nr_token].type);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             // Token t;
             // t.type = TK_DIV;
             // t.str[0] = '/';
@@ -160,7 +160,7 @@ static bool make_token(char *e) {
           case TK_LP: {
             tokens[nr_token].type = TK_LP;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            Log("@ match %s its tpye is %d", tokens[nr_token].str, tokens[nr_token].type);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             // Token t;
             // t.type = TK_LP;
             // t.str[0] = '(';
@@ -178,7 +178,7 @@ static bool make_token(char *e) {
             // tokens[nr_token] = t;
             tokens[nr_token].type = TK_RP;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            Log("@ match %s its tpye is %d", tokens[nr_token].str, tokens[nr_token].type);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             nr_token += 1;
             break;
           }
@@ -188,7 +188,7 @@ static bool make_token(char *e) {
             // int j = 0;
             tokens[nr_token].type = TK_DEC;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            Log("@ match %s its tpye is %d", tokens[nr_token].str, tokens[nr_token].type);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
             // for (j = 0; j < substr_len; j++) {
             //   t.str[j] = *(substr_start + j);
             // }
