@@ -107,6 +107,10 @@ static bool make_token(char *e) {
           printf("Error: too long for a token.\n");
           assert(0);
         }
+        //清空
+        for (int j = 0; j < 32; j++){ 
+					tokens[nr_token].str[j] = '\0';
+				}
         // 可以匹配了，接下来将识别出的 token 信息记录下来
         switch (rules[i].token_type) {
            case TK_ADD: {
