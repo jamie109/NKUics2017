@@ -9,6 +9,8 @@
 
 void cpu_exec(uint64_t);
 
+bool make_token(char *) ;
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
