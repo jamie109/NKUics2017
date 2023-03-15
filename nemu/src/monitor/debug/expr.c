@@ -110,68 +110,83 @@ static bool make_token(char *e) {
         // 可以匹配了，接下来将识别出的 token 信息记录下来
         switch (rules[i].token_type) {
            case TK_ADD: {
-            Token t;
-            t.type = TK_ADD;
-            t.str[0] = '+';
-            t.str[1] = '\0';
-            tokens[nr_token] = t;
+            tokens[nr_token].type = TK_ADD;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // Token t;
+            // t.type = TK_ADD;
+            // t.str[0] = '+';
+            // t.str[1] = '\0';
+            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
           case TK_SUB: {
-            Token t;
-            t.type = TK_SUB;
-            t.str[0] = '-';
-            t.str[1] = '\0';
-            tokens[nr_token] = t;
+            tokens[nr_token].type = TK_SUB;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // Token t;
+            // t.type = TK_SUB;
+            // t.str[0] = '-';
+            // t.str[1] = '\0';
+            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
           case TK_MUL: {
-            Token t;
-            t.type = TK_MUL;
-            t.str[0] = '*';
-            t.str[1] = '\0';
-            tokens[nr_token] = t;
+            tokens[nr_token].type = TK_MUL;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // Token t;
+            // t.type = TK_MUL;
+            // t.str[0] = '*';
+            // t.str[1] = '\0';
+            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
           case TK_DIV: {
-            Token t;
-            t.type = TK_DIV;
-            t.str[0] = '/';
-            t.str[1] = '\0';
-            tokens[nr_token] = t;
+            tokens[nr_token].type = TK_DIV;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // Token t;
+            // t.type = TK_DIV;
+            // t.str[0] = '/';
+            // t.str[1] = '\0';
+            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
           case TK_LP: {
-            Token t;
-            t.type = TK_LP;
-            t.str[0] = '(';
-            t.str[1] = '\0';
-            tokens[nr_token] = t;
+            tokens[nr_token].type = TK_LP;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // Token t;
+            // t.type = TK_LP;
+            // t.str[0] = '(';
+            // t.str[1] = '\0';
+            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
           case TK_RP: {
-            Token t;
-            t.type = TK_RP;
-            t.str[0] = ')';
-            t.str[1] = '\0';
-            tokens[nr_token] = t;
+
+            // Token t;
+            // t.type = TK_RP;
+            // t.str[0] = ')';
+            // t.str[1] = '\0';
+            // tokens[nr_token] = t;
+            tokens[nr_token].type = TK_RP;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
             nr_token += 1;
             break;
           }
           case TK_DEC: {
-            Token t;
-            t.type = TK_DEC;
-            int j = 0;
-            for (j = 0; j < substr_len; j++) {
-              t.str[j] = *(substr_start + j);
-            }
-            t.str[j] = '\0';
-            tokens[nr_token] = t;
+            // Token t;
+            // t.type = TK_DEC;
+            // int j = 0;
+            tokens[nr_token].type = TK_DEC;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            // for (j = 0; j < substr_len; j++) {
+            //   t.str[j] = *(substr_start + j);
+            // }
+            // t.str[j] = '\0';
+            // tokens[nr_token] = t;
             nr_token++;
             break;
           }
