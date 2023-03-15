@@ -221,6 +221,9 @@ static bool make_token(char *e) {
     }
   }
   // printf("that is all, what a happy match trip ^-^~~\n");
+  for (int k = 0; k < nr_token; k++)
+    printf("%s ", tokens[k].str);
+
   return true;
 }
 
