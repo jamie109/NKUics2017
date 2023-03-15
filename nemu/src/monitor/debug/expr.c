@@ -220,10 +220,12 @@ static bool make_token(char *e) {
       return false;
     }
   }
+
   // printf("that is all, what a happy match trip ^-^~~\n");
+  printf("@ for test lex, all the macth result in tokens is ");
   for (int k = 0; k < nr_token; k++)
     printf("%s ", tokens[k].str);
-
+  printf("\n");
   return true;
 }
 
