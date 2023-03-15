@@ -209,6 +209,11 @@ static bool make_token(char *e) {
   return true;
 }
 
+void for_expr_test( char *e){
+  if (make_token(e)== true){
+    printf("make_token success!!");
+  }
+}
 // 判断表达式是否被一对匹配的括号包围着,同时检查表达式的左右括号是否匹配
 // p和q 指示这个子表达式的开始位置 结束位置
 bool check_parentheses(int p, int q){

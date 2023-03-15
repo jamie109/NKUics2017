@@ -9,7 +9,7 @@
 
 void cpu_exec(uint64_t);
 
-bool make_token(char *) ;
+void for_expr_test( char *);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -100,8 +100,9 @@ static int cmd_t(char *args){
   char *arg = strtok(NULL, " ");
   // bool success;
   // uint32_t res = expr(arg, &success);
-  bool flag = make_token(arg);
-  printf("@from ui.c cmd_t function.\n the flag is %d ", (int)flag);  
+  // bool flag = make_token(arg);
+  for_expr_test(arg);
+  printf("@from ui.c cmd_t function.\n ");  
 
   return 0;
 }
