@@ -92,6 +92,18 @@ static int cmd_x(char *args){
     return 0;  
 }  
 
+// for test
+static int cmd_t(char *args){  
+  // get expr
+  char *arg = strtok(NULL, " ");
+  // bool success;
+  // uint32_t res = expr(arg, &success);
+  bool flag = make_token(arg);
+  printf("@from ui.c cmd_t function.\n the flag is %d ", (int)flag);  
+
+  return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -105,6 +117,7 @@ static struct {
   {"si", "Pause execution after stepping N instructions, When N is not given, the default is 1", cmd_si},
   {"info", "Output the values of all regs.", cmd_info},
   {"x", "Scan memory", cmd_x},
+  {"t", "use for test my pa1 expr", cmd_t},
 
 };
 // the number of cmd

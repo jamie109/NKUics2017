@@ -28,7 +28,7 @@ static struct rule {
   {"\\+", TK_ADD},      // plus
   {"==", TK_EQ},        // equal
   // my regex and token
-  {"\\-", TK_SUB},      // sub
+  {"-", TK_SUB},      // sub
   {"\\*", TK_MUL},      // mul
   {"/", TK_DIV},        // divide
   {"\\(", TK_LP},       // (
@@ -209,6 +209,65 @@ static bool make_token(char *e) {
   return true;
 }
 
+// 判断表达式是否被一对匹配的括号包围着,同时检查表达式的左右括号是否匹配
+// p和q 指示这个子表达式的开始位置 结束位置
+bool check_parentheses(int p, int q){
+	int j = 0, k = 0;
+  // (balabala)
+	if (tokens[p].type == TK_LP || tokens[q].type == TK_RP){
+		for (int i = p; i <= q; i++){
+			if (tokens[i].type == TK_LP)
+				j++;
+
+			if (tokens[i].type == TK_RP)
+				k++;
+      // p位置的（有匹配的）但不是q位置的
+			if (i != q && j == k)
+				return false;			
+		}
+    // loop end and it is good
+		if (j == k)
+				return true;			
+	}
+	return false;
+}
+/*
+// 找出 dominant operator, 将 token 表达式全部扫描一遍
+int dominant_operator(int p, int q){
+	int step = 0;
+	int op = -1;
+	int pri = 0;
+    
+	for (int i = p; i <= q; i++){
+    // 出现在一对括号中的 token 不是 dominant operator.注意到这里不会出现有括号包围整个表达式的情况
+		if (tokens[i].type == TK_LP)
+			step++;
+		
+		if (tokens[i].type == TK_RP)
+			step--;
+	
+		if (step == 0){
+      if (tokens[i].type == TK_ADD || tokens[i].type == TK_SUB){
+			  if (pri < 2){
+				  op = i;
+				  pri = 2;
+			  }
+		  } 
+      else if (tokens[i].type == TK_MUL || tokens[i].type == TK_DIV){
+			  if (pri < 1){
+				  op = i;
+				  pri = 1;
+			  }
+		  }
+      // p位置没有左括号 q位置有右括号 错误
+		  else if (step < 0){
+			  return -2;
+		  }
+	  }
+	}
+	return op;
+}
+*/
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
