@@ -499,6 +499,6 @@ void for_expr_test( char *e){
   //   printf("@ from for_expr_test funct dominant_operator success!!!\n");
   // }
   // // check eval
-  // uint32_t result = eval(0, nr_token - 1);
-  // printf("@ from for_expr_test funct eval success!!! the final result is %d\n",result);
+  uint32_t result = eval(0, nr_token - 1);
+  printf("@ from for_expr_test funct eval success!!! the final result is %d\n",result);
 }
