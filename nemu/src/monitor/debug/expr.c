@@ -11,10 +11,11 @@ enum {
   TK_NOTYPE = 256, TK_EQ,
   /* TODO: Add more token types */
   TK_ADD, TK_SUB, TK_MUL, TK_DIV,
-  TK_LP, TK_RP, TK_DEC,
+  TK_LP, TK_RP, 
   /* -9 负号*/
   TK_MUNIS,
-  TK_HEX, TK_REG,
+  /*DEC should be behind od HEX*/
+  TK_HEX, TK_DEC, TK_REG,
   TK_LOGOR, TK_LOGAND,
   TK_OR, TK_AND, TK_NOT,
   TK_NEQ
