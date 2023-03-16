@@ -373,6 +373,7 @@ uint32_t eval(int p, int q){
     if (op_idx == -1){
       res = -1 * eval(p + 1, q);
     }
+    else{
     uint32_t val1 = eval(p, op_idx - 1);
     uint32_t val2 = eval(op_idx + 1, q);
     int op_type = tokens[op_idx].type;
@@ -400,7 +401,7 @@ uint32_t eval(int p, int q){
       default:
         assert(0);
     }
-
+    }
 
   }
   printf("@ eval : now finish an eval part [p = %d, q = %d] the result is %d\n", p, q, res);
