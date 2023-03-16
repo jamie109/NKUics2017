@@ -11,9 +11,13 @@ enum {
   TK_NOTYPE = 256, TK_EQ,
   /* TODO: Add more token types */
   TK_ADD, TK_SUB, TK_MUL, TK_DIV,
-  TK_LP, TK_RP,TK_DEC,
+  TK_LP, TK_RP, TK_DEC,
   /* -9 负号*/
-  TK_MUNIS
+  TK_MUNIS,
+  TK_HEX, TK_REG,
+  TK_LOGOR, TK_LOGAND,
+  TK_OR, TK_AND, TK_NOT,
+  TK_NEQ
 
 };
 
@@ -29,13 +33,25 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", TK_ADD},      // plus
   {"==", TK_EQ},        // equal
+  {"!=", TK_NEQ},        // not-equal
   // my regex and token
   {"-", TK_SUB},      // sub
   {"\\*", TK_MUL},      // mul
   {"/", TK_DIV},        // divide
   {"\\(", TK_LP},       // (
   {"\\)", TK_RP},       // )
+
   {"[1-9][0-9]*|0", TK_DEC}, // decimal
+  {"0[xX][a-fA-F0-9]+", TK_HEX},//hex
+  {"\\$[eE][0-9a-zA-Z]{2}", TK_REG}, // registers
+
+  {"\\|\\|", TK_LOGOR},      // log-or
+  {"&&", TK_LOGAND},         // log-and
+  
+  {"\\|", TK_OR},        // calc-or
+  {"&", TK_AND},         // calc-and
+  {"!", TK_NOT}         // log-not
+
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
