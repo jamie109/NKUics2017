@@ -11,7 +11,9 @@ enum {
   TK_NOTYPE = 256, TK_EQ,
   /* TODO: Add more token types */
   TK_ADD, TK_SUB, TK_MUL, TK_DIV,
-  TK_LP, TK_RP,TK_DEC
+  TK_LP, TK_RP,TK_DEC,
+  /* -9 负号*/
+  TK_MUNIS
 
 };
 
@@ -69,6 +71,14 @@ typedef struct token {
 
 Token tokens[32];
 int nr_token;
+
+// hlep funct for finding munis--------it is not number or ) 
+bool hlep_find_munis(int my_type){
+  if (my_type == TK_DEC || my_type == TK_RP)
+    return false;
+  return true;
+}
+
 // 识别出其中的token
 static bool make_token(char *e) {
   int position = 0;
@@ -219,7 +229,18 @@ static bool make_token(char *e) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
+
   }
+
+    // find munis 
+    // if - in tokens[0] or there is no number or ) just ahead of - for example 7- (-8+9), 9--8
+    for (int k = 0; k < nr_token; k++){
+      if (k == 0 && tokens[k].type == TK_SUB)
+        tokens[k].type = TK_MUNIS;
+      else if (k != 0 && tokens[k].type == TK_SUB && hlep_find_munis(tokens[k-1].type)){
+        tokens[k].type = TK_MUNIS;
+      }
+    }
 
   // printf("that is all, what a happy match trip ^-^~~\n");
   printf("@ for test lex, all the macth result in tokens is ");
@@ -348,6 +369,10 @@ uint32_t eval(int p, int q){
   else {
     printf("@ eval : now enter else parttttt\n");
     int op_idx = dominant_operator(p, q);
+    // there is munis like -expr
+    if (op_idx == -1){
+      res = -1 * eval(p + 1, q);
+    }
     uint32_t val1 = eval(p, op_idx - 1);
     uint32_t val2 = eval(op_idx + 1, q);
     int op_type = tokens[op_idx].type;
@@ -388,7 +413,7 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  // TODO();
 
   return eval(0, nr_token - 1);
 }
