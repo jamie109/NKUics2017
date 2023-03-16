@@ -97,11 +97,11 @@ static int cmd_x(char *args){
 // for test
 static int cmd_t(char *args){  
   // get expr
-  char *arg = strtok(NULL, " ");
+  // char *arg = strtok(NULL, " ");
   // bool success;
   // uint32_t res = expr(arg, &success);
   // bool flag = make_token(arg);
-  for_expr_test(arg);
+  for_expr_test(args);
   printf("@ from ui.c cmd_t function.\n ");  
 
   return 0;

@@ -14,7 +14,6 @@ enum {
   TK_LP, TK_RP, 
   /* -9 负号*/
   TK_MUNIS,
-  /*DEC should be behind od HEX*/
   TK_HEX, TK_DEC, TK_REG,
   TK_LOGOR, TK_LOGAND,
   TK_OR, TK_AND, TK_NOT,
@@ -41,9 +40,10 @@ static struct rule {
   {"/", TK_DIV},        // divide
   {"\\(", TK_LP},       // (
   {"\\)", TK_RP},       // )
-
-  {"[1-9][0-9]*|0", TK_DEC}, // decimal
+  
+  /*DEC should be behind od HEX*/
   {"0[xX][a-fA-F0-9]+", TK_HEX},//hex
+  {"[1-9][0-9]*|0", TK_DEC}, // decimal
   {"\\$[eE][0-9a-zA-Z]{2}", TK_REG}, // registers
 
   {"\\|\\|", TK_LOGOR},      // log-or
