@@ -235,7 +235,7 @@ static bool make_token(char *e) {
 bool check_parentheses(int p, int q){
 	int j = 0, k = 0;
   // (balabala)
-	if (tokens[p].type == TK_LP || tokens[q].type == TK_RP){
+	if (tokens[p].type == TK_LP && tokens[q].type == TK_RP){
 		for (int i = p; i <= q; i++){
 			if (tokens[i].type == TK_LP)
 				j++;
