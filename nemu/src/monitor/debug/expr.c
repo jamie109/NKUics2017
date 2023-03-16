@@ -104,7 +104,7 @@ static bool make_token(char *e) {
          */
         // token.str lenth is 32 end with \0
         if (substr_len > 31) {
-          printf("Error: too long for a token.\n");
+          printf("@ make_token: Error! too long for a token.\n");
           assert(0);
         }
         //清空
@@ -286,8 +286,10 @@ int dominant_operator(int p, int q){
     else if (tokens[i].type == TK_RP){
       LP_num -= 1;
       // num of ( is less than num of )  ERROR
-      if (LP_num < 0)
+      if (LP_num < 0){
          printf("@ dominant_operator: EXPR ERROR! num of ( is less than num of )\n");
+         assert(0);
+      }
       continue;
     }
     // the token in () is not dominant_operator
