@@ -249,7 +249,7 @@ bool check_parentheses(int p, int q){
           printf("@ check_parentheses: NOT exist ( in position p\n");
           return false;
         }
-        printf("@ check_parentheses: EXPR ERROR! ( in positon p does not match ) in position q. now i is %d\n", i);
+        printf("@ check_parentheses: EXPR ERROR! ( in positon p does not match ) in position q. now i is %d\n then will enter next part [dominant operator]\n", i);
         return false;
         }			
 		}
@@ -260,6 +260,7 @@ bool check_parentheses(int p, int q){
     }			
 	}
   printf("@ check_parentheses: EXPR ERROR! the number of ( != the number of ) \n");
+  assert(0);
 	return false;
 }
 // judge whether a token is operator
@@ -386,19 +387,8 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   TODO();
-  // *success = true;
-  // for (int i = 0; i < nr_token; i++) {
-  //   if (tokens[i].type == TK_MIN && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type  != TK_HEX && tokens[i - 1].type  != TK_REG))) {
-  //     tokens[i].type = TK_NEG;
-  //   }
-  //   else if (tokens[i].type == TK_MUL && (i == 0 || (tokens[i - 1].type != TK_DEC && tokens[i - 1].type  != TK_HEX && tokens[i - 1].type  != TK_REG && tokens[i - 1].type != TK_RP))) {
-  //     tokens[i].type = TK_POI;
-  //   }
-  // }
-  // int p = 0, q = nr_token - 1;
-  // int value = evaluate(p, q);
 
-  return 0;
+  return eval(0, nr_token - 1);
 }
 
 void for_expr_test( char *e){
