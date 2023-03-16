@@ -299,15 +299,17 @@ int dominant_operator(int p, int q){
       if(is_operator(tokens[i])){
 
         int tmp_type = domt_op_type;
+        int tmp_idx = domt_op_idx;
         domt_op_type = tokens[i].type;
-        if (tmp_type == -1){
-          domt_op_idx = i;
-        }
+        domt_op_idx = i;
+        // if (tmp_type == -1){
+        //   domt_op_idx = i;
+        // }
         // now meet * / but have met + - so choose + -
         if (domt_op_type == 260 || domt_op_type == 261)// * /
           if (tmp_type == 258 || tmp_type == 259){// + -
             domt_op_type = tmp_type;
-            domt_op_idx = i;
+            domt_op_idx = tmp_idx;
           }
       }
     }
