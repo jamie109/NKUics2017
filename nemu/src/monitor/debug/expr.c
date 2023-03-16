@@ -5,7 +5,7 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-
+#include <stdlib.h>
 enum {
   // 空格串 TK_NOTYPE
   TK_NOTYPE = 256, TK_EQ,
@@ -323,10 +323,60 @@ int dominant_operator(int p, int q){
     }
     printf("@ now i = %d\n",i);
 	}
-  printf("@ dominant_operator: find dominant_operator its type is %d and index of it is %d\n", domt_op_type, domt_op_idx);
+  printf("@ dominant_operator: SUCCESS find dominant_operator its type is %d and index of it is %d\n", domt_op_type, domt_op_idx);
 	return domt_op_idx;
 }
+// evaluate
+uint32_t eval(int p, int q){
+  uint32_t res;
+  if (p > q){
+    printf("@ eval: ERROR! p > q.\n");
+    assert(0);
+  }
+  else if (p == q){// it is a number 
+    // str to unsigned long
+    printf("@ eval : now enter p==q part\n");
+    res = strtoul(tokens[p].str,NULL,0);
+  }
+  else if (check_parentheses(p, q)){
+    printf("@ eval : now enter check_parentheses(p, q) == true part\n");
+    res = eval(p+1, q-1);
+  }
+  else {
+    printf("@ eval : now enter else parttttt\n");
+    int op_idx = dominant_operator(p, q);
+    uint32_t val1 = eval(p, op_idx - 1);
+    uint32_t val2 = eval(op_idx + 1, q);
+    int op_type = tokens[op_idx].type;
+    switch (op_type){
+      case TK_ADD:{
+        res = val1 + val2;
+        break;
+      }
+      case TK_SUB:{
+        res = val1 - val2;
+        break;
+      }
+      case TK_MUL:{
+        res = val1 * val2;
+        break;
+      }
+      case TK_DIV:{
+        if (val2 == 0){
+          printf("@ eval : ERROR divide 0 now the p = %d and q = %d\n", p, q);
+          assert(0);
+        }
+        res = val1 / val2;
+        break;
+      }
+      default:
+        assert(0);
+    }
 
+
+  }
+  return res;
+}
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
