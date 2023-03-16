@@ -229,11 +229,7 @@ static bool make_token(char *e) {
   return true;
 }
 
-void for_expr_test( char *e){
-  if (make_token(e)== true){
-    printf("@ from for_expr_test funct make_token success!!!\n");
-  }
-}
+
 // 判断表达式是否被一对匹配的括号包围着,同时检查表达式的左右括号是否匹配
 // p和q 指示这个子表达式的开始位置 结束位置
 bool check_parentheses(int p, int q){
@@ -248,7 +244,7 @@ bool check_parentheses(int p, int q){
 				k++;
       // p位置的（有匹配的）但不是q位置的
 			if (i != q && j == k){
-        printf("@ check_parentheses: ERROR! '(' in positon p does not match ')' in position ')' \n");
+        printf("@ check_parentheses: ERROR! ( in positon p does not match ) in position q \n");
         return false;
         }			
 		}
@@ -258,7 +254,7 @@ bool check_parentheses(int p, int q){
 			return true;
     }			
 	}
-  printf("@ check_parentheses: ERROR! the number of '(' != the number of ')' \n";
+  printf("@ check_parentheses: ERROR! the number of ( != the number of ) \n");
 	return false;
 }
 /*
@@ -318,4 +314,20 @@ uint32_t expr(char *e, bool *success) {
   // int p = 0, q = nr_token - 1;
   // int value = evaluate(p, q);
   return 0;
+}
+
+void for_expr_test( char *e){
+  // check 词法分析
+  // if (make_token(e)== true){
+  //   printf("@ from for_expr_test funct make_token success!!!\n");
+  // }
+
+  // check check_parentheses
+  if (make_token(e)== true){
+    printf("@ from for_expr_test funct make_token success!!!\n");
+  }
+  if (check_parentheses(0, nr_token)== true){
+    printf("@ from for_expr_test funct check_parentheses success!!!\n");
+  }
+
 }
