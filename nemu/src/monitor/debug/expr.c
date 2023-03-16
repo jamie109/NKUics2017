@@ -313,6 +313,7 @@ int dominant_operator(int p, int q){
           }
       }
     }
+    printf("@ now i = %d\n",i);
 	}
   printf("@ dominant_operator: find dominant_operator its type is %d and index of it is %d\n", domt_op_type, domt_op_idx);
 	return domt_op_idx;
