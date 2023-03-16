@@ -258,9 +258,11 @@ bool check_parentheses(int p, int q){
       printf("@ check_parentheses: loop end and check success!\n");
 			return true;
     }			
-	}
-  printf("@ check_parentheses: EXPR ERROR! the number of ( != the number of ) \n");
-  assert(0);
+    else{
+      printf("@ check_parentheses: EXPR ERROR! the number of ( != the number of ) \n");
+      assert(0);
+    }
+  }
 	return false;
 }
 // judge whether a token is operator
