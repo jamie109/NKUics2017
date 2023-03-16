@@ -285,16 +285,22 @@ int dominant_operator(int p, int q){
     // meet )
     else if (tokens[i].type == TK_RP){
       LP_num -= 1;
+      // num of ( is less than num of )  ERROR
+      if (LP_num < 0)
+         printf("@ dominant_operator: EXPR ERROR! num of ( is less than num of )\n");
       continue;
     }
     // the token in () is not dominant_operator
     if (LP_num > 0){
       continue;
     }
-    // num of ( is less than num of )  ERROR
-    else if (LP_num < 0){
-      printf("@ dominant_operator: EXPR ERROR! num of ( is less than num of )\n");
-    }
+    // move this LP_num < 0 part to front
+    // // num of ( is less than num of )  ERROR
+    // else if (LP_num < 0){
+    //   // if there is a ) in position q and it happens that LP_num < 0
+    //   // won't exec this because the funct continued before
+    //   printf("@ dominant_operator: EXPR ERROR! num of ( is less than num of )\n");
+    // }
     else {
       if(is_operator(tokens[i])){
 
