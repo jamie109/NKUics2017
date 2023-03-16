@@ -40,7 +40,7 @@ static struct rule {
   {"/", TK_DIV},        // divide
   {"\\(", TK_LP},       // (
   {"\\)", TK_RP},       // )
-  
+
   /*DEC should be behind od HEX*/
   {"0[xX][a-fA-F0-9]+", TK_HEX},//hex
   {"[1-9][0-9]*|0", TK_DEC}, // decimal
@@ -193,7 +193,7 @@ static bool make_token(char *e) {
             break;
           }
           case TK_NOTYPE: {
-            printf("@ oh it is blank ignore it");
+            printf("@ oh it is blank ignore it\n");
             break;
           }
           case TK_EQ:{
