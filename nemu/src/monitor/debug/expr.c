@@ -249,7 +249,7 @@ bool check_parentheses(int p, int q){
           printf("@ check_parentheses: NOT exist ( in position p\n");
           return false;
         }
-        printf("@ check_parentheses: ERROR! ( in positon p does not match ) in position q. now i is %d\n", i);
+        printf("@ check_parentheses: EXPR ERROR! ( in positon p does not match ) in position q. now i is %d\n", i);
         return false;
         }			
 		}
@@ -259,46 +259,63 @@ bool check_parentheses(int p, int q){
 			return true;
     }			
 	}
-  printf("@ check_parentheses: ERROR! the number of ( != the number of ) \n");
+  printf("@ check_parentheses: EXPR ERROR! the number of ( != the number of ) \n");
 	return false;
 }
-/*
-// 找出 dominant operator, 将 token 表达式全部扫描一遍
-int dominant_operator(int p, int q){
-	int step = 0;
-	int op = -1;
-	int pri = 0;
-    
-	for (int i = p; i <= q; i++){
-    // 出现在一对括号中的 token 不是 dominant operator.注意到这里不会出现有括号包围整个表达式的情况
-		if (tokens[i].type == TK_LP)
-			step++;
-		
-		if (tokens[i].type == TK_RP)
-			step--;
-	
-		if (step == 0){
-      if (tokens[i].type == TK_ADD || tokens[i].type == TK_SUB){
-			  if (pri < 2){
-				  op = i;
-				  pri = 2;
-			  }
-		  } 
-      else if (tokens[i].type == TK_MUL || tokens[i].type == TK_DIV){
-			  if (pri < 1){
-				  op = i;
-				  pri = 1;
-			  }
-		  }
-      // p位置没有左括号 q位置有右括号 错误
-		  else if (step < 0){
-			  return -2;
-		  }
-	  }
-	}
-	return op;
+// judge whether a token is operator
+bool is_operator(Token my_token){
+  if (my_token.type >= 258 && my_token.type <= 261)
+    return true;
+
+  return false;
 }
-*/
+// find dominant operator, scan all the tokens
+int dominant_operator(int p, int q){
+
+  // dominant_operator position 
+  int domt_op_idx = -1;
+  int domt_op_type = -1;
+  int LP_num = 0;
+	for (int i = p; i <= q; i++){
+    // meet (
+    if (tokens[i].type == TK_LP){
+      LP_num += 1;
+      continue;
+    }
+    // meet )
+    else if (tokens[i].type == TK_RP){
+      LP_num -= 1;
+      continue;
+    }
+    // the token in () is not dominant_operator
+    if (LP_num > 0){
+      continue;
+    }
+    // num of ( is less than num of )  ERROR
+    else if (LP_num < 0){
+      printf("@ dominant_operator: EXPR ERROR! num of ( is less than num of )\n");
+    }
+    else {
+      if(is_operator(tokens[i])){
+
+        int tmp_type = domt_op_type;
+        domt_op_type = tokens[i].type;
+        if (tmp_type == -1){
+          domt_op_idx = i;
+        }
+        // now meet * / but have met + - so choose + -
+        if (domt_op_type == 260 || domt_op_type == 261)// * /
+          if (tmp_type == 258 || tmp_type == 259){// + -
+            domt_op_type = tmp_type;
+            domt_op_idx = i;
+          }
+      }
+    }
+	}
+  printf("@ dominant_operator: find dominant_operator its type is %d and index of it is %d\n", domt_op_type, domt_op_idx);
+	return domt_op_idx;
+}
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -323,16 +340,15 @@ uint32_t expr(char *e, bool *success) {
 
 void for_expr_test( char *e){
   // check 词法分析
-  // if (make_token(e)== true){
-  //   printf("@ from for_expr_test funct make_token success!!!\n");
-  // }
-
-  // check check_parentheses
   if (make_token(e)== true){
     printf("@ from for_expr_test funct make_token success!!!\n");
   }
-  if (check_parentheses(0, nr_token-1)== true){
-    printf("@ from for_expr_test funct check_parentheses success!!!\n");
+  // check check_parentheses
+  // if (check_parentheses(0, nr_token-1)== true){
+  //   printf("@ from for_expr_test funct check_parentheses success!!!\n");
+  // }
+  // check dominant_operator
+  if (dominant_operator(0, nr_token-1)== true){
+    printf("@ from for_expr_test funct dominant_operator success!!!\n");
   }
-
 }
