@@ -247,13 +247,18 @@ bool check_parentheses(int p, int q){
 			if (tokens[i].type == TK_RP)
 				k++;
       // p位置的（有匹配的）但不是q位置的
-			if (i != q && j == k)
-				return false;			
+			if (i != q && j == k){
+        printf("@ check_parentheses: ERROR! '(' in positon p does not match ')' in position ')' \n");
+        return false;
+        }			
 		}
     // loop end and it is good
-		if (j == k)
-				return true;			
+		if (j == k){
+      printf("@ check_parentheses: loop end and check success!\n");
+			return true;
+    }			
 	}
+  printf("@ check_parentheses: ERROR! the number of '(' != the number of ')' \n";
 	return false;
 }
 /*
