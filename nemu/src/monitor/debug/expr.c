@@ -326,7 +326,7 @@ void for_expr_test( char *e){
   if (make_token(e)== true){
     printf("@ from for_expr_test funct make_token success!!!\n");
   }
-  if (check_parentheses(0, nr_token)== true){
+  if (check_parentheses(0, nr_token-1)== true){
     printf("@ from for_expr_test funct check_parentheses success!!!\n");
   }
 
