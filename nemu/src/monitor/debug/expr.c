@@ -47,7 +47,7 @@ static struct rule {
 
   {"\\|\\|", TK_LOGOR},      // log-or
   {"&&", TK_LOGAND},         // log-and
-  
+
   {"\\|", TK_OR},        // calc-or
   {"&", TK_AND},         // calc-and
   {"!", TK_NOT}         // log-not
@@ -448,7 +448,7 @@ void for_expr_test( char *e){
   // if (dominant_operator(0, nr_token-1)== true){
   //   printf("@ from for_expr_test funct dominant_operator success!!!\n");
   // }
-  // check eval
-  uint32_t result = eval(0, nr_token - 1);
-  printf("@ from for_expr_test funct eval success!!! the final result is %d\n",result);
+  // // check eval
+  // uint32_t result = eval(0, nr_token - 1);
+  // printf("@ from for_expr_test funct eval success!!! the final result is %d\n",result);
 }
