@@ -244,7 +244,7 @@ bool check_parentheses(int p, int q){
 				k++;
       // p位置的（有匹配的）但不是q位置的
 			if (i != q && j == k){
-        printf("@ check_parentheses: ERROR! ( in positon p does not match ) in position q \n");
+        printf("@ check_parentheses: ERROR! ( in positon p does not match ) in position q. now i is %d\n", i);
         return false;
         }			
 		}
