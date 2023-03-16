@@ -144,11 +144,6 @@ static bool make_token(char *e) {
             tokens[nr_token].type = TK_ADD;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             printf("@ match %s its tpye num is %d\n", tokens[nr_token].str, tokens[nr_token].type);
-            // Token t;
-            // t.type = TK_ADD;
-            // t.str[0] = '+';
-            // t.str[1] = '\0';
-            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
@@ -156,11 +151,6 @@ static bool make_token(char *e) {
             tokens[nr_token].type = TK_SUB;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
-            // Token t;
-            // t.type = TK_SUB;
-            // t.str[0] = '-';
-            // t.str[1] = '\0';
-            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
@@ -168,11 +158,6 @@ static bool make_token(char *e) {
             tokens[nr_token].type = TK_MUL;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
-            // Token t;
-            // t.type = TK_MUL;
-            // t.str[0] = '*';
-            // t.str[1] = '\0';
-            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
@@ -180,11 +165,6 @@ static bool make_token(char *e) {
             tokens[nr_token].type = TK_DIV;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
-            // Token t;
-            // t.type = TK_DIV;
-            // t.str[0] = '/';
-            // t.str[1] = '\0';
-            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
@@ -192,21 +172,10 @@ static bool make_token(char *e) {
             tokens[nr_token].type = TK_LP;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
-            // Token t;
-            // t.type = TK_LP;
-            // t.str[0] = '(';
-            // t.str[1] = '\0';
-            // tokens[nr_token] = t;
             nr_token += 1;
             break;
           }
           case TK_RP: {
-
-            // Token t;
-            // t.type = TK_RP;
-            // t.str[0] = ')';
-            // t.str[1] = '\0';
-            // tokens[nr_token] = t;
             tokens[nr_token].type = TK_RP;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             // tokens[nr_token].str[substr_start + substr_len] = '\0';
@@ -215,26 +184,85 @@ static bool make_token(char *e) {
             break;
           }
           case TK_DEC: {
-            // Token t;
-            // t.type = TK_DEC;
-            // int j = 0;
             tokens[nr_token].type = TK_DEC;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             // tokens[nr_token].str[ substr_start + substr_len] = '\0';
             printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
-            // for (j = 0; j < substr_len; j++) {
-            //   t.str[j] = *(substr_start + j);
-            // }
-            // t.str[j] = '\0';
-            // tokens[nr_token] = t;
             nr_token++;
             break;
           }
           case TK_NOTYPE: {
-            // printf("@ oh it is blank ignore it");
+            printf("@ oh it is blank ignore it");
             break;
           }
-          default: TODO();
+          case TK_EQ:{
+            tokens[nr_token].type = TK_EQ;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          }
+          case TK_NEQ:{
+            tokens[nr_token].type = TK_NEQ;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          }
+          case TK_HEX:{
+            tokens[nr_token].type = TK_HEX;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          }
+          case TK_REG:{
+            tokens[nr_token].type = TK_REG;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          }
+          case TK_LOGOR:{
+            tokens[nr_token].type = TK_LOGOR;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          }
+          case TK_LOGAND:{
+            tokens[nr_token].type = TK_LOGAND;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          }
+          case TK_OR:{
+            tokens[nr_token].type = TK_OR;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          }
+          case TK_AND:{
+            tokens[nr_token].type = TK_AND;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          }
+          case TK_NOT:{
+            tokens[nr_token].type = TK_NOT;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            nr_token++;
+            break;
+          }
+          default: {
+            // TODO();
+            printf("@ make_token: ERROR cannot match the substring.\n");
+            assert(0);
+          }
         }
 
         break;
