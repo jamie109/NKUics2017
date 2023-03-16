@@ -44,7 +44,7 @@ static struct rule {
   /*DEC should be behind od HEX*/
   {"0[xX][a-fA-F0-9]+", TK_HEX},//hex
   {"[1-9][0-9]*|0", TK_DEC}, // decimal
-  {"\\$[eE][0-9a-zA-Z]{2}", TK_REG}, // registers
+  {"\\$[a-zA-Z]+", TK_REG}, // registers
 
   {"\\|\\|", TK_LOGOR},      // log-or
   {"&&", TK_LOGAND},         // log-and
@@ -405,7 +405,28 @@ uint32_t eval(int p, int q){
   else if (p == q){// it is a number 
     // str to unsigned long
     printf("@ eval : now enter p==q part\n");
-    res = strtoul(tokens[p].str,NULL,0);
+    switch (tokens[p].type){
+      case TK_DEC:
+      case TK_HEX:{
+        res = strtoul(tokens[p].str,NULL,0);
+      }
+      case TK_REG:{
+        // eip
+        if(strcmp(tokens[p].str, "$eip") == 0) 
+          res = cpu.eip;
+        // eax ecx 
+        else{
+          for(int i = 0; i < 8; i++)
+            if(strcmp(&tokens[p].str[1], reg_name(i, 4)) == 0) 
+              res = reg_l(i);
+            else if(strcmp(&tokens[p].str[1], reg_name(i, 2)) == 0) 
+              res = reg_w(i);
+            else if(strcmp(&tokens[p].str[1], reg_name(i, 1)) == 0) 
+              res = reg_b(i);
+        }
+      
+      }
+    }
   }
   else if (check_parentheses(p, q)){
     printf("@ eval : now enter check_parentheses(p, q) == true part\n");
