@@ -36,7 +36,7 @@ WP* new_wp(){
   // tmp->next = NULL;
   free_ = free_->next;
   tmp->next = NULL;
-  printf("# free_ update now its no is %d", free_->NO);
+  printf("# free_ update now its no is %d\n", free_->NO);
   // head(tmp)---->NULL
   if(head == NULL)
     head = tmp;
