@@ -345,6 +345,7 @@ static bool make_token(char *e) {
     // find munis 
     // if - in tokens[0] or there is no number or ) just ahead of - for example 7- (-8+9), 9--8
     for (int k = 0; k < nr_token; k++){
+      printf("=========into change part======\n");
       if (k == 0 && tokens[k].type == TK_SUB){
         printf("change SUB to MUNIS\n");
         tokens[k].type = TK_MUNIS;
