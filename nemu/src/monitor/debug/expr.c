@@ -413,7 +413,18 @@ bool check_parentheses(int p, int q){
 	return false;
 }
 
-
+bool is_Right_combined(int tk_type){
+  switch (tk_type)
+  {
+  case TK_MUNIS:
+  case TK_POINTER:
+  case TK_NOT:{
+    return true;
+  }
+  default:
+    return false;
+  }
+}
 
 
 
@@ -471,8 +482,14 @@ int dominant_operator(int p, int q){
           */
         // optimized because add some other operators
         int priority_i = token2priority(tokens[i]);
+        if (is_Right_combined(domt_op_type) && is_Right_combined(tokens[i].type)){
+           /*do nothing
+           becasue their priority is the same so just not change
+           */
+        }
+        else
         // now priority on tokens[i] is lower than before or equal
-        if (priority_i <= last_priority){
+        if (priority_i <= last_priority ){
           domt_op_idx = i;
           domt_op_type = tokens[i].type;
           last_priority = priority_i;
