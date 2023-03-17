@@ -141,18 +141,19 @@ static int cmd_w(char *args){
     wp_new_create->expr_str[strlen(args)] = '\0';
 
     printf("# cmd_w: [new wp] the no is %d the value is {%d}\n",wp_new_create->NO,wp_new_create->expr_val);
-    return 0;
+    // return 0;
   }
   // test free_wp
-  // free_wp(wp_new_create);
-  // printf("# [free wp] its val is %d\n", wp_new_create->expr_val);
+  free_wp(wp_new_create);
+  printf("# [free wp] its val is %d\n", wp_new_create->expr_val);
   return 0;
 }
 
 static int cmd_d(char *args){
   char *arg = strtok(NULL, " ");
   if(arg){
-    int wp_no = strtoul(arg,NULL,0);
+    int wp_no = strtoul(arg, NULL, 0);
+    printf("# the wp_no you wanna del is %d\n", wp_no);
     free_wp_no(wp_no);
   }
   return 0;

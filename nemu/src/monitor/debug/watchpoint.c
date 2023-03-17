@@ -50,6 +50,8 @@ WP* new_wp(){
 }
 
 void free_wp(WP* wp){
+  printf("# inter free_wp \n");
+
 	if (wp == NULL){
     printf("# ERROR you free a null\n");
 		assert(0);
@@ -70,7 +72,7 @@ void free_wp(WP* wp){
   for(int k = 0; k <32; k++){
     free_->expr_str[k] = '\0';
   }
-
+  printf("# free_wp: del success\n ");
 }
 
 bool watch_wps(){
@@ -104,6 +106,7 @@ void print_wps_info(){
 }
 
 void free_wp_no(int no){
+  printf("# inter free_wp_no \n");
   WP* tmp = head;
   bool find = false;
   WP* wp_targ = NULL;
@@ -123,13 +126,15 @@ void free_wp_no(int no){
   }
   // donot find the wp you want to del
   if(find == false){
-    printf("# ERROR you free a null\n");
+    printf("# free_wp_no: ERROR you free a null\n");
 		assert(0);
   }
+  
   wp_targ->next = free_;
   free_ = wp_targ;
   free_->expr_val = 0;
   for(int k = 0; k <32; k++){
     free_->expr_str[k] = '\0';
   }
+  printf("# free_wp_no: del success\n ");
 }
