@@ -480,7 +480,7 @@ uint32_t eval(int p, int q){
   uint32_t res;
   if (p > q){
     printf("@ eval: ERROR! p > q.\n");
-    // res = 0;
+    // return 0;
   }
   else if (p == q){// it is a number 
     // str to unsigned long
@@ -513,7 +513,7 @@ uint32_t eval(int p, int q){
   }
   else if (check_parentheses(p, q)){
     printf("@ eval : now enter check_parentheses(p, q) == true part\n");
-    res = eval(p+1, q-1);
+    return eval(p+1, q-1);
   }
   else {
     printf("@ eval : now enter else parttttt\n");
