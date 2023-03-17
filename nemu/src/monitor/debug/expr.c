@@ -444,6 +444,7 @@ int dominant_operator(int p, int q){
         // now priority on tokens[i] is lower than before or equal
         if (priority_i <= last_priority){
           domt_op_idx = i;
+          domt_op_type = tokens[i].type;
           last_priority = priority_i;
         }
       }
