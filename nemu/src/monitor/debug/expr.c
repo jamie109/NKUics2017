@@ -131,6 +131,7 @@ int token2priority(Token tk){
     case TK_DIV:{
       return 9;
     }
+    case TK_POINTER:
     case TK_MUNIS:
     case TK_NOT:{
       return 10;
