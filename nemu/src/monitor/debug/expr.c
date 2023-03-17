@@ -136,6 +136,7 @@ int token2priority(Token tk){
     case TK_NOT:{
       return 10;
     }
+
     default:{
       // today is 230317
       return 17;
@@ -352,7 +353,7 @@ static bool make_token(char *e) {
       // * pointer
       if (k == 0 && tokens[k].type == TK_MUL)
         tokens[k].type = TK_POINTER;
-      else if(k != 0 && tokens[k].type == TK_MUL && is_operator(tokens[k-1]))
+      else if(k != 0 && tokens[k].type == TK_MUL && hlep_find_munis(tokens[k-1].type))
         tokens[k].type = TK_POINTER;
     }
 
