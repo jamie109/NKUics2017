@@ -129,7 +129,7 @@ void free_wp_no(int no){
       wp_targ = tmp->next;
       tmp->next = tmp->next->next;
     }
-    if(tmp->next->next == NULL) {
+    if(tmp->next->next && tmp->next->next == NULL) {
       tmp_ahead = tmp;
     }
     if(tmp->NO == no){
