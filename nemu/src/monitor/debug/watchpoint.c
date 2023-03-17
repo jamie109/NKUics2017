@@ -32,7 +32,7 @@ WP* new_wp(){
   WP* tmp = free_;
   printf("# give you a wp its no is %d\n", tmp->NO);
   // free_ lose a wp
-  tmp->next = NULL;
+  // tmp->next = NULL;
   free_ = free_->next;
   printf("# free_ update now its no is %d", free_->NO);
   // head(tmp)---->NULL
