@@ -1,7 +1,7 @@
 #include "monitor/watchpoint.h"
 #include "monitor/expr.h"
 
-#define NR_WP 10
+#define NR_WP 32
 
 static WP wp_pool[NR_WP];
 static WP *head, *free_;
@@ -45,35 +45,36 @@ WP* new_wp(){
     tmp->next = head;
     head = tmp;
   }
-  printf("# now the head no is %d\n", head->NO);
+  // printf("# now the head no is %d\n", head->NO);
   return tmp;
 }
 
-void free_wp(WP* wp){
-  printf("# inter free_wp \n");
+// use free_wp_no instead of this funct
+// void free_wp(WP* wp){
+//   printf("# inter free_wp \n");
 
-	if (wp == NULL){
-    printf("# ERROR you free a null\n");
-		assert(0);
-	}
-	if (wp == head)
-		head = head->next;
-	else {
-		WP* tmp = head;
-    // can head
-    while(tmp){
-      if(tmp->next == wp)
-        tmp->next = tmp->next->next;
-    }
-	}
-	wp->next = free_;
-	free_ = wp;
-	free_->expr_val = 0;
-  for(int k = 0; k <32; k++){
-    free_->expr_str[k] = '\0';
-  }
-  printf("# free_wp: del success\n ");
-}
+// 	if (wp == NULL){
+//     printf("# ERROR you free a null\n");
+// 		assert(0);
+// 	}
+// 	if (wp == head)
+// 		head = head->next;
+// 	else {
+// 		WP* tmp = head;
+//     // can head
+//     while(tmp){
+//       if(tmp->next == wp)
+//         tmp->next = tmp->next->next;
+//     }
+// 	}
+// 	wp->next = free_;
+// 	free_ = wp;
+// 	free_->expr_val = 0;
+//   for(int k = 0; k <32; k++){
+//     free_->expr_str[k] = '\0';
+//   }
+//   printf("# free_wp: del success\n ");
+// }
 
 bool watch_wps(){
   bool is_changed = false, success = true;
@@ -120,7 +121,7 @@ void print_wps_info_free(){
   }
 }
 void free_wp_no(int no){
-  printf("# inter free_wp_no \n");
+  // printf("# inter free_wp_no \n");
   
   bool find = false;
   WP* wp_targ = NULL;
@@ -137,7 +138,7 @@ void free_wp_no(int no){
     WP* tmp = head;
     WP* tmp_ahead = NULL;
   while(tmp){
-    printf("# free_wp_no: IN LOOP now wp.no is %d\n", tmp->NO);
+    // printf("# free_wp_no: IN LOOP now wp.no is %d\n", tmp->NO);
     if(tmp->next && tmp->next->NO == no){
       find = true;
       wp_targ = tmp->next;

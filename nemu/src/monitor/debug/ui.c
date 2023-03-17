@@ -79,8 +79,8 @@ static int cmd_info(char *args){
     }
     else if(n == 1 && strcmp(s,"w") == 0){
       print_wps_info();
-      printf("*****************************************************\n");
-      print_wps_info_free();/* it is just for test*/
+      // printf("*****************************************************\n");
+      // print_wps_info_free();/* it is just for test*/
     }
   
   }
