@@ -14,6 +14,7 @@ WP* new_wp();
 void free_wp(WP*);
 bool watch_wps();
 void print_wps_info();
+void free_wp_no(int);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
@@ -147,6 +148,17 @@ static int cmd_w(char *args){
   // printf("# [free wp] its val is %d\n", wp_new_create->expr_val);
   return 0;
 }
+
+static int cmd_d(char *args){
+  char *arg = strtok(NULL, " ");
+  if(arg){
+    int wp_no = strtoul(arg,NULL,0);
+    free_wp_no(wp_no);
+  }
+  return 0;
+}
+
+
 static struct {
   char *name;
   char *description;
@@ -164,6 +176,7 @@ static struct {
   {"t", "use for test my pa1 expr", cmd_t},
   {"p", "eval expr", cmd_p},
   {"w", "set wp and pause only when the expr's value changes", cmd_w },
+  {"d", "del wp whose no is N", cmd_d},
 
 };
 // the number of cmd

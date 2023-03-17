@@ -61,7 +61,7 @@ void free_wp(WP* wp){
     // can head
     while(tmp){
       if(tmp->next == wp)
-        tmp = tmp->next->next;
+        tmp->next = tmp->next->next;
     }
 	}
 	wp->next = free_;
@@ -97,9 +97,39 @@ void print_wps_info(){
   }
   else{
     while(tmp){
-      printf("wp.no = %d\t expr: %s\t value:%d\t\n", tmp->NO, tmp->expr_str, tmp->expr_val);
+      printf("wp.no = %d\texpr: %s\t value:%d\t\n", tmp->NO, tmp->expr_str, tmp->expr_val);
 		  tmp = tmp->next;
     }
   }
+}
 
+void del_wp_no(int no){
+  WP* tmp = head;
+  bool find = false;
+  WP* wp_targ = NULL;
+  // del head
+  if (tmp->NO == no){
+    find = true;
+    wp_targ = tmp;
+		tmp = tmp->next;
+  }
+
+  while(tmp){
+    if(tmp->next->NO == no){
+      find = true;
+      wp_targ = tmp->next;
+      tmp->next = tmp->next->next;
+    }
+  }
+  // donot find the wp you want to del
+  if(find == false){
+    printf("# ERROR you free a null\n");
+		assert(0);
+  }
+  wp_targ->next = free_;
+  free_ = wp_targ;
+  free_->expr_val = 0;
+  for(int k = 0; k <32; k++){
+    free_->expr_str[k] = '\0';
+  }
 }
