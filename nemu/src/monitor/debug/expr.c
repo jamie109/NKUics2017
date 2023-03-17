@@ -518,15 +518,15 @@ uint32_t eval(int p, int q){
   else {
     printf("@ eval : now enter else parttttt\n");
     int op_idx = dominant_operator(p, q);
-    if(op_idx == 0 && tokens[p].type == TK_MUNIS){
+    if(op_idx == p && tokens[p].type == TK_MUNIS){
       printf("@ eval : - expr!\n");
       res = -1 * eval(p + 1, q);
     }
-    else if (op_idx == 0 && tokens[p].type == TK_NOT){
+    else if (op_idx == p && tokens[p].type == TK_NOT){
       printf("@ eval : ! expr!\n");
       res = ! eval(p + 1, q);
     }
-    else if (op_idx == 0 && tokens[p].type == TK_POINTER){
+    else if (op_idx == p && tokens[p].type == TK_POINTER){
       printf("@ eval : *pointer\n");
       res = vaddr_read(eval(p + 1, q), 4);
     }
