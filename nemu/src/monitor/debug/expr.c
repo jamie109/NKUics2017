@@ -42,9 +42,9 @@ static struct rule {
   {"\\)", TK_RP},       // )
 
   /*DEC should be behind od HEX*/
-  {"[1-9][0-9]*|0", TK_DEC}, // decimal
 
   {"0[xX][a-fA-F0-9]+", TK_HEX},//hex
+  {"[1-9][0-9]*|0", TK_DEC}, // decimal
   {"\\$[a-zA-Z]+", TK_REG}, // registers
 
   {"\\|\\|", TK_LOGOR},      // log-or
@@ -437,8 +437,12 @@ uint32_t eval(int p, int q){
     printf("@ eval : now enter else parttttt\n");
     int op_idx = dominant_operator(p, q);
     // there is munis like -expr
-    if (op_idx == -1){
+    if (op_idx == -1 && tokens[p].type == TK_MUNIS){
       res = -1 * eval(p + 1, q);
+    }
+    // ! expr
+    else if (op_idx == -1 && tokens[p].type == TK_NOT){
+      res = ! eval(p + 1, q);
     }
     else{
     uint32_t val1 = eval(p, op_idx - 1);
@@ -463,6 +467,30 @@ uint32_t eval(int p, int q){
           assert(0);
         }
         res = val1 / val2;
+        break;
+      }
+      case TK_LOGAND:{
+        res = val1 && val2;
+        break;
+      }
+      case TK_LOGOR:{
+        res = val1 || val2;
+        break;
+      }
+      case TK_EQ:{
+        res = (val1 == val2);
+        break;
+      }
+      case TK_NEQ:{
+        res = (val1 != val2);
+        break;
+      }
+      case TK_AND:{
+        res = val1 & val2;
+        break;
+      }
+      case TK_OR:{
+        res = val1 | val2;
         break;
       }
       default:
