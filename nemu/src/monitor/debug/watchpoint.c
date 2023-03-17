@@ -111,12 +111,12 @@ void free_wp_no(int no){
   bool find = false;
   WP* wp_targ = NULL;
   // del head
-  if (tmp->NO == no){
-    printf("# free_wp_no: [tmp->NO == no]\n");
+  if (head->NO == no){
+    printf("# free_wp_no: [head->NO == no]\n");
     find = true;
-    wp_targ = tmp;
-		tmp = tmp->next;
-    return;
+    wp_targ = head;
+		head = head->next;
+    // return;
   }
   // dont forget else!!
   else{
