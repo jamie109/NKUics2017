@@ -97,7 +97,7 @@ void print_wps_info(){
   }
   else{
     while(tmp){
-      printf("[wp.no = %d]\t expr: %s\t value:%d]\t\n", tmp->NO, tmp->expr_str, tmp->expr_val);
+      printf("wp.no = %d\t expr: %s\t value:%d\t\n", tmp->NO, tmp->expr_str, tmp->expr_val);
 		  tmp = tmp->next;
     }
   }
