@@ -135,7 +135,7 @@ static int cmd_w(char *args){
     wp_new_create->expr_str[strlen(args)] = '\0';
 
     printf("# cmd_w: [new wp] the no is %d the value is {%d}\n",wp_new_create->NO,wp_new_create->expr_val);
-    return 0;
+    // return 0;
   }
   // test free_wp
   free_wp(wp_new_create);
