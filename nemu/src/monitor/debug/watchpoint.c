@@ -121,16 +121,28 @@ void free_wp_no(int no){
   // dont forget else!!
   else{
     WP* tmp = head;
-  while(tmp->next){
+    WP* tmp_ahead = NULL;
+  while(tmp){
     printf("# free_wp_no: IN LOOP now wp.no is %d\n", tmp->NO);
-    if(tmp->next->NO == no){
+    if(tmp->next && tmp->next->NO == no){
       find = true;
       wp_targ = tmp->next;
       tmp->next = tmp->next->next;
     }
+    if(tmp->next->next == NULL) {
+      tmp_ahead = tmp;
+    }
+    if(tmp->NO == no){
+      tmp_ahead -> next = NULL;
+      wp_targ = tmp;
+    }
     tmp = tmp->next;
   }
-
+  // now tmp is the last wp on head
+  // if(tmp->NO == no){
+  //   find = true;
+  //   wp_
+  // }
   }
   // donot find the wp you want to del
   if(find == false){
