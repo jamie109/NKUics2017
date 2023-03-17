@@ -16,7 +16,7 @@ enum {
   TK_MUNIS,
   TK_HEX, TK_DEC, TK_REG,
   TK_LOGOR, TK_LOGAND,
-  TK_OR, TK_AND, TK_XOR, TK_NOT,
+  TK_OR, TK_AND, /*TK_XOR, */TK_NOT,
   TK_NEQ
 
 };
@@ -52,8 +52,8 @@ static struct rule {
 
   {"\\|", TK_OR},        // calc-or
   {"&", TK_AND},         // calc-and
-  {"^", TK_XOR},         // calc -xor
-  {"!", TK_NOT}         // log-not
+  // {"^", TK_XOR},         // calc -xor
+  {"!", TK_NOT},         // log-not
 
 };
 
@@ -247,13 +247,13 @@ static bool make_token(char *e) {
             nr_token++;
             break;
           }
-          case TK_XOR:{
-            tokens[nr_token].type = TK_XOR;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
-            printf("@ match ^ its tpye is %d\n",/* tokens[nr_token].str, */tokens[nr_token].type);
-            nr_token++;
-            break;
-          }
+          // case TK_XOR:{
+          //   tokens[nr_token].type = TK_XOR;
+          //   strncpy(tokens[nr_token].str, substr_start, substr_len);
+          //   printf("@ match ^ its tpye is %d\n",/* tokens[nr_token].str, */tokens[nr_token].type);
+          //   nr_token++;
+          //   break;
+          // }
           case TK_AND:{
             tokens[nr_token].type = TK_AND;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
@@ -355,9 +355,9 @@ int token2priority(Token tk){
     case TK_OR:{
       return 3;
     }
-    case TK_XOR:{
-      return 4;
-    }
+    // case TK_XOR:{
+    //   return 4;
+    // }
     case TK_AND:{
       return 5;
     }
@@ -570,10 +570,10 @@ uint32_t eval(int p, int q){
         res = val1 | val2;
         break;
       }
-      case TK_XOR:{
-        res = val1 ^ val2;
-        break;
-      }
+      // case TK_XOR:{
+      //   res = val1 ^ val2;
+      //   break;
+      // }
       default:
         assert(0);
     }
