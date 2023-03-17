@@ -30,7 +30,12 @@ void cpu_exec(uint64_t n) {
 
 #ifdef DEBUG
     /* TODO: check watchpoints here. */
-    watch_wps();
+    bool change = watch_wps();
+    if (change){
+      Log("wp changed stop\n");
+	    nemu_state = NEMU_STOP;
+      }
+    
 #endif
 
 #ifdef HAS_IOE
