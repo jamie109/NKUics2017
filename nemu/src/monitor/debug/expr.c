@@ -350,7 +350,7 @@ static bool make_token(char *e) {
         printf("change SUB to MUNIS\n");
         tokens[k].type = TK_MUNIS;
       }
-      if (k != 0 && tokens[k].type == TK_SUB && is_operator(tokens[k-1])){
+      if (k != 0 && tokens[k].type == TK_SUB && (is_operator(tokens[k-1])||tokens[k-1].type == TK_LP)){
         printf("change SUB to MUNIS\n");
         tokens[k].type = TK_MUNIS;
       }
@@ -359,7 +359,7 @@ static bool make_token(char *e) {
         printf("change MUL to POINTER\n");
         tokens[k].type = TK_POINTER;
       }
-      if(k != 0 && tokens[k].type == TK_MUL && is_operator(tokens[k-1])){
+      if(k != 0 && tokens[k].type == TK_MUL && (is_operator(tokens[k-1])||tokens[k-1].type == TK_LP)){
         printf("change MUL to POINTER\n");
         tokens[k].type = TK_POINTER;
       }
