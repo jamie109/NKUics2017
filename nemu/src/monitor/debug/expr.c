@@ -16,7 +16,7 @@ enum {
   TK_MUNIS,
   TK_HEX, TK_DEC, TK_REG,
   TK_LOGOR, TK_LOGAND,
-  TK_OR, TK_AND, TK_NOT,
+  TK_OR, TK_AND, TK_XOR, TK_NOT,
   TK_NEQ
 
 };
@@ -52,6 +52,7 @@ static struct rule {
 
   {"\\|", TK_OR},        // calc-or
   {"&", TK_AND},         // calc-and
+  {"^", TK_XOR},         // calc -xor
   {"!", TK_NOT}         // log-not
 
 };
@@ -332,19 +333,67 @@ bool check_parentheses(int p, int q){
   }
 	return false;
 }
+
+
+// priority for token 
+// the num is less the priority is lower
+int token2priority(Token tk){
+  switch(tk.type){
+    case TK_LOGOR:{
+      return 1;
+    }
+    case TK_LOGAND:{
+      return 2;
+    }
+    case TK_OR:{
+      return 3;
+    }
+    case TK_XOR:{
+      return 4;
+    }
+    case TK_AND:{
+      return 5;
+    }
+    case TK_EQ:
+    case TK_NEQ:{
+      return 6;
+    }
+    /*may be will add < > <+ >= save 7 for them*/
+    case TK_SUB:
+    case TK_ADD:{
+      return 8;
+    }
+    case TK_MUL:
+    case TK_DIV:{
+      return 9;
+    }
+    case TK_MUNIS:
+    case TK_NOT:{
+      return 10;
+    }
+    default:{
+      // today is 230317
+      return 17;
+    }
+  }
+}
 // judge whether a token is operator
 bool is_operator(Token my_token){
-  if (my_token.type >= 258 && my_token.type <= 261)
+  // optimized because add some other operators
+  // if (my_token.type >= 258 && my_token.type <= 261)
+  if(token2priority(my_token) < 11)
     return true;
 
   return false;
 }
+
 // find dominant operator, scan all the tokens
 int dominant_operator(int p, int q){
 
   // dominant_operator position 
   int domt_op_idx = -1;
   int domt_op_type = -1;
+  int last_priority = 99;
   int LP_num = 0;
 	for (int i = p; i <= q; i++){
     // meet (
@@ -375,7 +424,7 @@ int dominant_operator(int p, int q){
     // }
     else {
       if(is_operator(tokens[i])){
-
+        /*
         int tmp_type = domt_op_type;
         int tmp_idx = domt_op_idx;
         domt_op_type = tokens[i].type;
@@ -389,6 +438,14 @@ int dominant_operator(int p, int q){
             domt_op_type = tmp_type;
             domt_op_idx = tmp_idx;
           }
+          */
+        // optimized because add some other operators
+        int priority_i = token2priority(tokens[i]);
+        // now priority on tokens[i] is lower than before or equal
+        if (priority_i <= last_priority){
+          domt_op_idx = i;
+          last_priority = priority_i;
+        }
       }
     }
     // printf("@ now i = %d\n",i);
@@ -436,6 +493,15 @@ uint32_t eval(int p, int q){
   else {
     printf("@ eval : now enter else parttttt\n");
     int op_idx = dominant_operator(p, q);
+    if(tokens[p].type == TK_MUNIS){
+      printf("@ eval : - expr!\n");
+      res = -1 * eval(p + 1, q);
+    }
+    else if (tokens[p].type == TK_NOT){
+      printf("@ eval : ! expr!\n");
+      res = ! eval(p + 1, q);
+    }
+    /*
     // there is munis like -expr
     if (op_idx == -1 && tokens[p].type == TK_MUNIS){
       printf("@ eval : - expr!\n");
@@ -446,6 +512,7 @@ uint32_t eval(int p, int q){
       printf("@ eval : ! expr!\n");
       res = ! eval(p + 1, q);
     }
+    */
     else{
     uint32_t val1 = eval(p, op_idx - 1);
     uint32_t val2 = eval(op_idx + 1, q);
@@ -493,6 +560,10 @@ uint32_t eval(int p, int q){
       }
       case TK_OR:{
         res = val1 | val2;
+        break;
+      }
+      case TK_XOR:{
+        res = val1 ^ val2;
         break;
       }
       default:
