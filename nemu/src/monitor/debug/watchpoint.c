@@ -116,8 +116,10 @@ void free_wp_no(int no){
     find = true;
     wp_targ = tmp;
 		tmp = tmp->next;
+    return;
   }
-
+  // dont forget else!!
+  else{
   while(tmp){
     printf("# free_wp_no: IN LOOP now wp.no is %d\n", tmp->NO);
     if(tmp->next->NO == no){
@@ -126,6 +128,8 @@ void free_wp_no(int no){
       tmp->next = tmp->next->next;
     }
     tmp = tmp->next;
+  }
+
   }
   // donot find the wp you want to del
   if(find == false){
