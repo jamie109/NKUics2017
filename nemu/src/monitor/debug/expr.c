@@ -17,7 +17,8 @@ enum {
   TK_HEX, TK_DEC, TK_REG,
   TK_LOGOR, TK_LOGAND,
   TK_OR, TK_AND, /*TK_XOR, */TK_NOT,
-  TK_NEQ
+  TK_NEQ,
+  TK_POINTER
 
 };
 
@@ -93,9 +94,62 @@ int nr_token;
 
 // hlep funct for finding munis--------it is not number or ) 
 bool hlep_find_munis(int my_type){
-  if (my_type == TK_DEC || my_type == TK_RP)
+  if (my_type == TK_DEC || my_type == TK_RP || TK_HEX || TK_REG)
     return false;
   return true;
+}
+
+// priority for token 
+// the num is less the priority is lower
+int token2priority(Token tk){
+  switch(tk.type){
+    case TK_LOGOR:{
+      return 1;
+    }
+    case TK_LOGAND:{
+      return 2;
+    }
+    case TK_OR:{
+      return 3;
+    }
+    // case TK_XOR:{
+    //   return 4;
+    // }
+    case TK_AND:{
+      return 5;
+    }
+    case TK_EQ:
+    case TK_NEQ:{
+      return 6;
+    }
+    /*may be will add < > <+ >= save 7 for them*/
+    case TK_SUB:
+    case TK_ADD:{
+      return 8;
+    }
+    case TK_MUL:
+    case TK_DIV:{
+      return 9;
+    }
+    case TK_MUNIS:
+    case TK_NOT:{
+      return 10;
+    }
+    default:{
+      // today is 230317
+      return 17;
+    }
+  }
+}
+// judge whether a token is operator
+// help to find pointer as well
+bool is_operator(Token my_token){
+  // optimized because add some other operators
+  // if (my_token.type >= 258 && my_token.type <= 261)
+  if(token2priority(my_token) < 11)
+    return true;
+
+  return false;
 }
 
 // 识别出其中的token
@@ -294,6 +348,11 @@ static bool make_token(char *e) {
       else if (k != 0 && tokens[k].type == TK_SUB && hlep_find_munis(tokens[k-1].type)){
         tokens[k].type = TK_MUNIS;
       }
+      // * pointer
+      if (k == 0 && tokens[k].type == TK_MUL)
+        tokens[k].type = TK_POINTER;
+      else if(k != 0 && tokens[k].type == TK_MUL && is_operator(tokens[k-1]))
+        tokens[k].type = TK_POINTER;
     }
 
   // printf("that is all, what a happy match trip ^-^~~\n");
@@ -342,57 +401,8 @@ bool check_parentheses(int p, int q){
 }
 
 
-// priority for token 
-// the num is less the priority is lower
-int token2priority(Token tk){
-  switch(tk.type){
-    case TK_LOGOR:{
-      return 1;
-    }
-    case TK_LOGAND:{
-      return 2;
-    }
-    case TK_OR:{
-      return 3;
-    }
-    // case TK_XOR:{
-    //   return 4;
-    // }
-    case TK_AND:{
-      return 5;
-    }
-    case TK_EQ:
-    case TK_NEQ:{
-      return 6;
-    }
-    /*may be will add < > <+ >= save 7 for them*/
-    case TK_SUB:
-    case TK_ADD:{
-      return 8;
-    }
-    case TK_MUL:
-    case TK_DIV:{
-      return 9;
-    }
-    case TK_MUNIS:
-    case TK_NOT:{
-      return 10;
-    }
-    default:{
-      // today is 230317
-      return 17;
-    }
-  }
-}
-// judge whether a token is operator
-bool is_operator(Token my_token){
-  // optimized because add some other operators
-  // if (my_token.type >= 258 && my_token.type <= 261)
-  if(token2priority(my_token) < 11)
-    return true;
 
-  return false;
-}
+
 
 // find dominant operator, scan all the tokens
 int dominant_operator(int p, int q){
@@ -508,6 +518,10 @@ uint32_t eval(int p, int q){
     else if (tokens[p].type == TK_NOT){
       printf("@ eval : ! expr!\n");
       res = ! eval(p + 1, q);
+    }
+    else if (tokens[p].type == TK_POINTER){
+      printf("@ eval : *pointer\n");
+      res = vaddr_read(eval(p + 1, q), 4);
     }
     /*
     // there is munis like -expr
