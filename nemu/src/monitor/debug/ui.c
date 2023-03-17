@@ -14,6 +14,7 @@ WP* new_wp();
 void free_wp(WP*);
 bool watch_wps();
 void print_wps_info();
+void print_wps_info_free();
 void free_wp_no(int);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -76,8 +77,10 @@ static int cmd_info(char *args){
       //eip
       printf("eip\t0x%x\t%d\n", cpu.eip, cpu.eip);
     }
-    else if(n == 1 && strcmp(s,"w") == 0)
+    else if(n == 1 && strcmp(s,"w") == 0){
       print_wps_info();
+      print_wps_info_free();/* it is just for test*/
+    }
   
   }
   return 0;

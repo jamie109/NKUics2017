@@ -1,7 +1,7 @@
 #include "monitor/watchpoint.h"
 #include "monitor/expr.h"
 
-#define NR_WP 32
+#define NR_WP 10
 
 static WP wp_pool[NR_WP];
 static WP *head, *free_;
@@ -99,12 +99,26 @@ void print_wps_info(){
   }
   else{
     while(tmp){
-      printf("wp.no = %d\texpr: %s\t value:%d\t\n", tmp->NO, tmp->expr_str, tmp->expr_val);
+      printf("free wp.no = %d\texpr: %s\t value:%d\t\n", tmp->NO, tmp->expr_str, tmp->expr_val);
 		  tmp = tmp->next;
     }
   }
 }
 
+/*for test */
+void print_wps_info_free(){
+  WP* tmp = free_;
+  if (tmp == NULL){
+    printf("# there is no wp\n");
+    return;
+  }
+  else{
+    while(tmp){
+      printf("wp.no = %d\texpr: %s\t value:%d\t\n", tmp->NO, tmp->expr_str, tmp->expr_val);
+		  tmp = tmp->next;
+    }
+  }
+}
 void free_wp_no(int no){
   printf("# inter free_wp_no \n");
   
