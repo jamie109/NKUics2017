@@ -109,7 +109,7 @@ static int cmd_t(char *args){
 
 static int cmd_p(char *args){  
   bool *success = false;
-  int res = expr(args, success);
+  uint32_t res = expr(args, success);
   if(success)
     printf("%d\n ", res);  
   return 0;
