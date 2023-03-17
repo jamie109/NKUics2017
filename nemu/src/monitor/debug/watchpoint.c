@@ -72,3 +72,19 @@ void free_wp(WP* wp){
   }
 
 }
+
+bool watch_wps(){
+  bool is_changed = false, success = true;
+  WP* tmp = head;
+  // scan all the wps on head
+  while(tmp){
+    uint32_t cur_res = expr(tmp->expr_str, &success);
+    if(cur_res != expr(tmp->expr_str, &success)){
+      is_changed = true;
+      printf(">>>>NOTICE the [wp.no = %d]s value changed.[old_value = %d], [new_value = %d]\n", tmp->NO, cur_res, expr(tmp->expr_str, &success));
+      // continue;
+    }
+    tmp = tmp->next;
+  }
+  return is_changed;
+}

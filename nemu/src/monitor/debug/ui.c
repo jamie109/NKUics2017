@@ -12,6 +12,7 @@ void cpu_exec(uint64_t);
 void for_expr_test( char *);
 WP* new_wp();
 void free_wp(WP*);
+bool watch_wps();
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
@@ -135,11 +136,11 @@ static int cmd_w(char *args){
     wp_new_create->expr_str[strlen(args)] = '\0';
 
     printf("# cmd_w: [new wp] the no is %d the value is {%d}\n",wp_new_create->NO,wp_new_create->expr_val);
-    // return 0;
+    return 0;
   }
   // test free_wp
-  free_wp(wp_new_create);
-  printf("# [free wp] its val is %d\n", wp_new_create->expr_val);
+  // free_wp(wp_new_create);
+  // printf("# [free wp] its val is %d\n", wp_new_create->expr_val);
   return 0;
 }
 static struct {
@@ -158,7 +159,7 @@ static struct {
   /*for test*/
   {"t", "use for test my pa1 expr", cmd_t},
   {"p", "eval expr", cmd_p},
-  { "w", "set wp and pause only when the expr's value changes", cmd_w },
+  {"w", "set wp and pause only when the expr's value changes", cmd_w },
 
 };
 // the number of cmd

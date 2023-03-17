@@ -11,7 +11,7 @@
 int nemu_state = NEMU_STOP;
 
 void exec_wrapper(bool);
-
+bool watch_wps();
 /* Simulate how the CPU works. */
 // n means exec how many steps
 void cpu_exec(uint64_t n) {
@@ -30,7 +30,7 @@ void cpu_exec(uint64_t n) {
 
 #ifdef DEBUG
     /* TODO: check watchpoints here. */
-
+    watch_wps();
 #endif
 
 #ifdef HAS_IOE
