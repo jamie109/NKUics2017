@@ -495,10 +495,10 @@ void for_expr_test( char *e){
   //   printf("@ from for_expr_test funct check_parentheses success!!!\n");
   // }
   // // check dominant_operator
-  // if (dominant_operator(0, nr_token-1)== true){
-  //   printf("@ from for_expr_test funct dominant_operator success!!!\n");
-  // }
+  if (dominant_operator(0, nr_token-1)== true){
+    printf("@ from for_expr_test funct dominant_operator success!!!\n");
+  }
   // // check eval
-  uint32_t result = eval(0, nr_token - 1);
-  printf("@ from for_expr_test funct eval success!!! the final result is %d\n",result);
+  // uint32_t result = eval(0, nr_token - 1);
+  // printf("@ from for_expr_test funct eval success!!! the final result is %d\n",result);
 }
