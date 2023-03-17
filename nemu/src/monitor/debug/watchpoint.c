@@ -32,8 +32,10 @@ WP* new_wp(){
   WP* tmp = free_;
   printf("# give you a wp its no is %d\n", tmp->NO);
   // free_ lose a wp
+  // del it there because now free_ and tmp point to the same addr ,if I make tmp->next = NULL,then free_->next is also NULL
   // tmp->next = NULL;
   free_ = free_->next;
+  tmp->next = NULL;
   printf("# free_ update now its no is %d", free_->NO);
   // head(tmp)---->NULL
   if(head == NULL)
