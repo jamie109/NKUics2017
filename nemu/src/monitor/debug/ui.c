@@ -107,6 +107,13 @@ static int cmd_t(char *args){
   return 0;
 }
 
+static int cmd_p(char *args){  
+  bool *success = false;
+  int res = expr(args, success);
+  if(success)
+    printf("%d\n ", res);  
+  return 0;
+}
 static struct {
   char *name;
   char *description;
@@ -120,7 +127,9 @@ static struct {
   {"si", "Pause execution after stepping N instructions, When N is not given, the default is 1", cmd_si},
   {"info", "Output the values of all regs.", cmd_info},
   {"x", "Scan memory", cmd_x},
+  /*for test*/
   {"t", "use for test my pa1 expr", cmd_t},
+  {"p", "eval expr", cmd_p},
 
 };
 // the number of cmd

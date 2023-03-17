@@ -367,7 +367,7 @@ static bool make_token(char *e) {
 
 // 判断表达式是否被一对匹配的括号包围着,同时检查表达式的左右括号是否匹配
 // p和q 指示这个子表达式的开始位置 结束位置
-bool check_parentheses(int p, int q){
+bool check_parentheses(int p, int q, bool* success){
 	int j = 0, k = 0;
   // (balabala)
 	if (tokens[p].type == TK_LP && tokens[q].type == TK_RP){
@@ -382,9 +382,11 @@ bool check_parentheses(int p, int q){
 			if (i != q && j == k ){
         if (j == 0){
           printf("@ check_parentheses: NOT exist ( in position p\n");
+          *success = false;
           return false;
         }
         printf("@ check_parentheses: EXPR ERROR! ( in positon p does not match ) in position q. now i is %d\n then will enter next part [dominant operator]\n", i);
+        *success = false;
         return false;
         }			
 		}
@@ -406,7 +408,7 @@ bool check_parentheses(int p, int q){
 
 
 // find dominant operator, scan all the tokens
-int dominant_operator(int p, int q){
+int dominant_operator(int p, int q, bool* success){
 
   // dominant_operator position 
   int domt_op_idx = -1;
@@ -473,13 +475,15 @@ int dominant_operator(int p, int q){
 	return domt_op_idx;
 }
 // evaluate
-uint32_t eval(int p, int q){
+uint32_t eval(int p, int q, bool *success){
   uint32_t res;
   if (p > q){
+    *success = false;
     printf("@ eval: ERROR! p > q.\n");
     assert(0);
   }
   else if (p == q){// it is a number 
+    *success = true;
     // str to unsigned long
     printf("@ eval : now enter p==q part\n");
     switch (tokens[p].type){
@@ -503,26 +507,30 @@ uint32_t eval(int p, int q){
         }
       
       }
+      default:{
+        *success = false;
+        return 0;
+      }
     }
   }
-  else if (check_parentheses(p, q)){
-    printf("@ eval : now enter check_parentheses(p, q) == true part\n");
-    res = eval(p+1, q-1);
+  else if (check_parentheses(p, q, success)){
+    printf("@ eval : now enter check_parentheses(p, q, success) == true part\n");
+    res = eval(p+1, q-1, success);
   }
   else {
     printf("@ eval : now enter else parttttt\n");
-    int op_idx = dominant_operator(p, q);
+    int op_idx = dominant_operator(p, q, success);
     if(tokens[p].type == TK_MUNIS){
       printf("@ eval : - expr!\n");
-      res = -1 * eval(p + 1, q);
+      res = -1 * eval(p + 1, q, success);
     }
     else if (tokens[p].type == TK_NOT){
       printf("@ eval : ! expr!\n");
-      res = ! eval(p + 1, q);
+      res = ! eval(p + 1, q, success);
     }
     else if (tokens[p].type == TK_POINTER){
       printf("@ eval : *pointer\n");
-      res = vaddr_read(eval(p + 1, q), 4);
+      res = vaddr_read(eval(p + 1, q, success), 4);
     }
     /*
     // there is munis like -expr
@@ -537,8 +545,8 @@ uint32_t eval(int p, int q){
     }
     */
     else{
-    uint32_t val1 = eval(p, op_idx - 1);
-    uint32_t val2 = eval(op_idx + 1, q);
+    uint32_t val1 = eval(p, op_idx - 1, success);
+    uint32_t val2 = eval(op_idx + 1, q, success);
     int op_type = tokens[op_idx].type;
     switch (op_type){
       case TK_ADD:{
@@ -556,6 +564,7 @@ uint32_t eval(int p, int q){
       case TK_DIV:{
         if (val2 == 0){
           printf("@ eval : ERROR divide 0 now the p = %d and q = %d\n", p, q);
+          *success = false;
           assert(0);
         }
         res = val1 / val2;
@@ -607,14 +616,21 @@ uint32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
 
-  return eval(0, nr_token - 1);
+  return eval(0, nr_token - 1, success);
 }
 
 void for_expr_test( char *e){
+  bool *success = false;
   // check 词法分析
   if (make_token(e)== true){
     printf("@ from for_expr_test funct make_token success!!!\n");
+    *success = true;
   }
+  else
+  {
+    *success = false;
+  }
+  
   // check check_parentheses
   // if (check_parentheses(0, nr_token-1)== true){
   //   printf("@ from for_expr_test funct check_parentheses success!!!\n");
@@ -624,6 +640,6 @@ void for_expr_test( char *e){
   //   printf("@ from for_expr_test funct dominant_operator success!!!\n");
   // }
   // // check eval
-  uint32_t result = eval(0, nr_token - 1);
+  uint32_t result = eval(0, nr_token - 1, success);
   printf("@ from for_expr_test funct eval success!!! the final result is %d\n",result);
 }
