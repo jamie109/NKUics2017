@@ -42,8 +42,9 @@ static struct rule {
   {"\\)", TK_RP},       // )
 
   /*DEC should be behind od HEX*/
-  {"0[xX][a-fA-F0-9]+", TK_HEX},//hex
   {"[1-9][0-9]*|0", TK_DEC}, // decimal
+
+  {"0[xX][a-fA-F0-9]+", TK_HEX},//hex
   {"\\$[a-zA-Z]+", TK_REG}, // registers
 
   {"\\|\\|", TK_LOGOR},      // log-or
