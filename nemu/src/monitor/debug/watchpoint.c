@@ -81,10 +81,25 @@ bool watch_wps(){
     uint32_t cur_res = expr(tmp->expr_str, &success);
     if(cur_res != expr(tmp->expr_str, &success)){
       is_changed = true;
-      printf(">>>>NOTICE the [wp.no = %d]s value changed.[old_value = %d], [new_value = %d]\n", tmp->NO, cur_res, expr(tmp->expr_str, &success));
+      printf("# NOTICE the [wp.no = %d]s value changed.[old_value = %d], [new_value = %d]\n", tmp->NO, cur_res, expr(tmp->expr_str, &success));
       // continue;
     }
     tmp = tmp->next;
   }
   return is_changed;
+}
+
+void print_wps_info(){
+  WP* tmp = head;
+  if (tmp == NULL){
+    printf("# there is no wp\n");
+    return;
+  }
+  else{
+    while(tmp){
+      printf("[wp.no = %d]\t expr: %s\t value:%d]\t\n", tmp->NO, tmp->expr_str, tmp->expr_val);
+		  tmp = tmp->next;
+    }
+  }
+
 }
