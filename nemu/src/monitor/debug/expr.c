@@ -250,7 +250,7 @@ static bool make_token(char *e) {
           case TK_XOR:{
             tokens[nr_token].type = TK_XOR;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            printf("@ match %s its tpye is %d\n", tokens[nr_token].str, tokens[nr_token].type);
+            printf("@ match ^ its tpye is %d\n",/* tokens[nr_token].str, */tokens[nr_token].type);
             nr_token++;
             break;
           }
