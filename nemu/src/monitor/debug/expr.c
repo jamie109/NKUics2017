@@ -595,9 +595,9 @@ uint32_t eval(int p, int q){
       //   res = val1 ^ val2;
       //   break;
       // }
-      default:
-        // assert(0);
-        res = 0;
+      // default:
+      //   // assert(0);
+      //   res = 0;
     }
     }
 
