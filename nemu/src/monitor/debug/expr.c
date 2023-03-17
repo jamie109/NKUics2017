@@ -438,10 +438,12 @@ uint32_t eval(int p, int q){
     int op_idx = dominant_operator(p, q);
     // there is munis like -expr
     if (op_idx == -1 && tokens[p].type == TK_MUNIS){
+      printf("@ eval : - expr!\n");
       res = -1 * eval(p + 1, q);
     }
     // ! expr
     else if (op_idx == -1 && tokens[p].type == TK_NOT){
+      printf("@ eval : ! expr!\n");
       res = ! eval(p + 1, q);
     }
     else{
