@@ -112,12 +112,14 @@ void free_wp_no(int no){
   WP* wp_targ = NULL;
   // del head
   if (tmp->NO == no){
+    printf("# free_wp_no: [tmp->NO == no]\n");
     find = true;
     wp_targ = tmp;
 		tmp = tmp->next;
   }
 
   while(tmp){
+    printf("# free_wp_no: IN LOOP now wp.no is %d\n", tmp->NO);
     if(tmp->next->NO == no){
       find = true;
       wp_targ = tmp->next;
