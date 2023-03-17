@@ -11,6 +11,9 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = &wp_pool[i + 1];
+    // add
+    wp_pool[i].expr_val = 0;
+
   }
   wp_pool[NR_WP - 1].next = NULL;
 
@@ -20,24 +23,30 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
-static int wp_free_num = 32;
 
 WP* new_wp(){
-  if(wp_free_num){
-    printf("@ there is no free wp.\n");
-    return NULL;
-  }
+  if(free_==NULL){
+		printf("# there is no free wp.\n");
+		return NULL;
+	}
   WP* tmp = free_;
-  printf("@ oh give you a wp its no is %d\n", tmp->NO);
-  tmp->next = head;
-  head = tmp;
+  printf("# give you a wp its no is %d\n", tmp->NO);
+  // free_ lose a wp
+  tmp->next = NULL;
   free_ = free_->next;
-  wp_free_num --;
-
+  // head(tmp)---->NULL
+  if(head == NULL)
+    head = tmp;
+  // tmp--->head......---->NULL
+  else{
+    tmp->next = head;
+    head = tmp;
+  }
+  printf("# now the head no is %d\n", head->NO);
   return tmp;
 }
 
-void free_wp(WP* wp){
-  wp_free_num ++;
+// void free_wp(WP* wp){
+//   wp_free_num ++;
 
-}
+// }

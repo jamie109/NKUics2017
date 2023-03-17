@@ -10,7 +10,7 @@
 void cpu_exec(uint64_t);
 
 void for_expr_test( char *);
-
+WP* new_wp();
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
@@ -114,6 +114,29 @@ static int cmd_p(char *args){
     printf("%d\n ", res);  
   return 0;
 }
+
+static int cmd_w(char *args){  
+  // char *arg = strtok(NULL, " ");
+  bool success = true;
+  uint32_t res = expr(args, &success);
+  if(success){
+    WP* wp_new_create = new_wp();
+    if(wp_new_create == NULL){
+      printf("# cmd_w: there is no new wp to give you sorry.\n");
+      return 0;
+      }
+
+    wp_new_create->expr_val = res;
+    for(int i = 0; args[i] ; i++)
+      wp_new_create->expr_str[i] = args[i];
+    
+    wp_new_create->expr_str[strlen(args)] = '\0';
+
+    printf("# cmd_w: [new wp] the no is %d the value is {%d}\n",wp_new_create->NO,wp_new_create->expr_val);
+    return 0;
+  }
+  return 0;
+}
 static struct {
   char *name;
   char *description;
@@ -130,6 +153,7 @@ static struct {
   /*for test*/
   {"t", "use for test my pa1 expr", cmd_t},
   {"p", "eval expr", cmd_p},
+  { "w", "set wp and pause only when the expr's value changes", cmd_w },
 
 };
 // the number of cmd
