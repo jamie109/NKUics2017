@@ -480,7 +480,7 @@ uint32_t eval(int p, int q){
   uint32_t res;
   if (p > q){
     printf("@ eval: ERROR! p > q.\n");
-    res = 0;
+    // res = 0;
   }
   else if (p == q){// it is a number 
     // str to unsigned long
@@ -595,9 +595,9 @@ uint32_t eval(int p, int q){
       //   res = val1 ^ val2;
       //   break;
       // }
-      // default:
-      //   // assert(0);
-      //   res = 0;
+      default:
+        // assert(0);
+        res = 0;
     }
     }
 
