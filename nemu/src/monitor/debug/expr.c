@@ -505,9 +505,9 @@ uint32_t eval(int p, int q){
         }
       
       }
-      default:{
-        assert(0);
-      }
+      // default:{
+      //   assert(0);
+      // }
     }
   }
   else if (check_parentheses(p, q)){
