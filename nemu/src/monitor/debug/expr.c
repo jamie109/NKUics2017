@@ -402,7 +402,7 @@ bool check_parentheses(int p, int q){
 		}
     // loop end and it is good
 		if (j == k){
-      printf("@ check_parentheses: loop end and check success!\n");
+      // printf("@ check_parentheses: loop end and check success!\n");
 			return true;
     }			
     else{
@@ -493,7 +493,7 @@ uint32_t eval(int p, int q){
   }
   else if (p == q){// it is a number 
     // str to unsigned long
-    printf("@ eval : now enter p==q part\n");
+    // printf("@ eval : now enter p==q part\n");
     switch (tokens[p].type){
       case TK_DEC:
       case TK_HEX:{
@@ -521,22 +521,22 @@ uint32_t eval(int p, int q){
     }
   }
   else if (check_parentheses(p, q)){
-    printf("@ eval : now enter check_parentheses(p, q) == true part\n");
+    // printf("@ eval : now enter check_parentheses(p, q) == true part\n");
     return eval(p+1, q-1);
   }
   else {
-    printf("@ eval : now enter else parttttt\n");
+    // printf("@ eval : now enter else parttttt\n");
     int op_idx = dominant_operator(p, q);
     if(op_idx == p && tokens[p].type == TK_MUNIS){
-      printf("@ eval : - expr!\n");
+      // printf("@ eval : - expr!\n");
       res = -1 * eval(p + 1, q);
     }
     else if (op_idx == p && tokens[p].type == TK_NOT){
-      printf("@ eval : ! expr!\n");
+      // printf("@ eval : ! expr!\n");
       res = ! eval(p + 1, q);
     }
     else if (op_idx == p && tokens[p].type == TK_POINTER){
-      printf("@ eval : *pointer\n");
+      // printf("@ eval : *pointer\n");
       res = vaddr_read(eval(p + 1, q), 4);
     }
     /*
