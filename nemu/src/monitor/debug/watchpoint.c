@@ -49,7 +49,26 @@ WP* new_wp(){
   return tmp;
 }
 
-// void free_wp(WP* wp){
-//   wp_free_num ++;
+void free_wp(WP* wp){
+	if (wp == NULL){
+    printf("# ERROR you free a null\n");
+		assert(0);
+	}
+	if (wp == head)
+		head = head->next;
+	else {
+		WP* tmp = head;
+    // can head
+    while(tmp){
+      if(tmp->next == wp)
+        tmp = tmp->next->next;
+    }
+	}
+	wp->next = free_;
+	free_ = wp;
+	free_->expr_val = 0;
+  for(int k = 0; k <32; k++){
+    free_->expr_str[k] = '\0';
+  }
 
-// }
+}

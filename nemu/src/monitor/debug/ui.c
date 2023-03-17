@@ -11,6 +11,7 @@ void cpu_exec(uint64_t);
 
 void for_expr_test( char *);
 WP* new_wp();
+void free_wp(WP*);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
@@ -119,8 +120,9 @@ static int cmd_w(char *args){
   // char *arg = strtok(NULL, " ");
   bool success = true;
   uint32_t res = expr(args, &success);
+  WP* wp_new_create = NULL;
   if(success){
-    WP* wp_new_create = new_wp();
+    wp_new_create = new_wp();
     if(wp_new_create == NULL){
       printf("# cmd_w: there is no new wp to give you sorry.\n");
       return 0;
@@ -135,6 +137,9 @@ static int cmd_w(char *args){
     printf("# cmd_w: [new wp] the no is %d the value is {%d}\n",wp_new_create->NO,wp_new_create->expr_val);
     return 0;
   }
+  // test free_wp
+  free_wp(wp_new_create);
+  printf("# [free wp] its val is %d\n", wp_new_create->expr_val);
   return 0;
 }
 static struct {
