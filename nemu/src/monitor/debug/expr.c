@@ -350,7 +350,7 @@ static bool make_token(char *e) {
         printf("change SUB to MUNIS\n");
         tokens[k].type = TK_MUNIS;
       }
-      else if (k != 0 && tokens[k].type == TK_SUB && hlep_find_munis(tokens[k-1].type)){
+      if (k != 0 && tokens[k].type == TK_SUB && hlep_find_munis(tokens[k-1].type)){
         printf("change SUB to MUNIS\n");
         tokens[k].type = TK_MUNIS;
       }
@@ -359,7 +359,7 @@ static bool make_token(char *e) {
         printf("change MUL to POINTER\n");
         tokens[k].type = TK_POINTER;
       }
-      else if(k != 0 && tokens[k].type == TK_MUL && hlep_find_munis(tokens[k-1].type)){
+      if(k != 0 && tokens[k].type == TK_MUL && hlep_find_munis(tokens[k-1].type)){
         printf("change MUL to POINTER\n");
         tokens[k].type = TK_POINTER;
       }
