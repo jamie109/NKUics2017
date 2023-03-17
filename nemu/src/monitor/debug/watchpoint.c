@@ -25,7 +25,7 @@ void init_wp_pool() {
 
 
 WP* new_wp(){
-  if(free_==NULL){
+  if(free_ == NULL){
 		printf("# there is no free wp.\n");
 		return NULL;
 	}
@@ -34,6 +34,7 @@ WP* new_wp(){
   // free_ lose a wp
   tmp->next = NULL;
   free_ = free_->next;
+  printf("# free_ update now its no is %d", free_->NO);
   // head(tmp)---->NULL
   if(head == NULL)
     head = tmp;
