@@ -125,6 +125,7 @@ void free_wp_no(int no){
       wp_targ = tmp->next;
       tmp->next = tmp->next->next;
     }
+    tmp = tmp->next;
   }
   // donot find the wp you want to del
   if(find == false){
