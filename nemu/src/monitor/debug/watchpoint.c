@@ -114,7 +114,7 @@ void print_wps_info_free(){
   }
   else{
     while(tmp){
-      printf("wp.no = %d\texpr: %s\t value:%d\t\n", tmp->NO, tmp->expr_str, tmp->expr_val);
+      printf("[free]wp.no = %d\n", tmp->NO);
 		  tmp = tmp->next;
     }
   }
