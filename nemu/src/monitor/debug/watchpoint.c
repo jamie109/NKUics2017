@@ -103,7 +103,7 @@ void print_wps_info(){
   }
 }
 
-void del_wp_no(int no){
+void free_wp_no(int no){
   WP* tmp = head;
   bool find = false;
   WP* wp_targ = NULL;
