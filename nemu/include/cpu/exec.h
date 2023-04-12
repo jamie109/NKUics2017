@@ -7,7 +7,7 @@
 typedef void (*EHelper) (vaddr_t *);
 
 #include "cpu/decode.h"
-
+// return the addr that eip points and make eip point to the next addr
 static inline uint32_t instr_fetch(vaddr_t *eip, int len) {
   uint32_t instr = vaddr_read(*eip, len);
 #ifdef DEBUG

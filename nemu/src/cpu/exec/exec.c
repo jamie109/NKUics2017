@@ -213,9 +213,12 @@ static make_EHelper(2byte_esc) {
 }
 
 make_EHelper(real) {
+  // 指令的第一个字节, 将其解释成 opcode 并记录在全局译码信息 decoding 
   uint32_t opcode = instr_fetch(eip, 1);
   decoding.opcode = opcode;
+  // 操作数的宽度信息
   set_width(opcode_table[opcode].width);
+  // 译码和执行
   idex(eip, &opcode_table[opcode]);
 }
 
@@ -230,8 +233,9 @@ void exec_wrapper(bool print_flag) {
   decoding.p = decoding.asm_buf;
   decoding.p += sprintf(decoding.p, "%8x:   ", cpu.eip);
 #endif
-
+  // 首先将当前的%eip 保存到全局译码信息 decoding 的成员 seq_eip 中
   decoding.seq_eip = cpu.eip;
+  // 当代码从 exec_real()返回时,decoding.seq_eip 将会指向下一条指令的地址
   exec_real(&decoding.seq_eip);
 
 #ifdef DEBUG

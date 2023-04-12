@@ -4,11 +4,11 @@
 #include "common.h"
 
 #include "rtl.h"
-
+// reg memory immidiate
 enum { OP_TYPE_REG, OP_TYPE_MEM, OP_TYPE_IMM };
 
 #define OP_STR_SIZE 40
-
+// some info about operand
 typedef struct {
   uint32_t type;
   int width;
@@ -24,7 +24,7 @@ typedef struct {
 
 typedef struct {
   uint32_t opcode;
-  vaddr_t seq_eip;  // sequential eip
+  vaddr_t seq_eip;  // sequential eip 当前的 %eip
   bool is_operand_size_16;
   uint8_t ext_opcode;
   bool is_jmp;
@@ -70,7 +70,7 @@ extern DecodeInfo decoding;
 #define id_src (&decoding.src)
 #define id_src2 (&decoding.src2)
 #define id_dest (&decoding.dest)
-
+// 译码函数
 #define make_DHelper(name) void concat(decode_, name) (vaddr_t *eip)
 typedef void (*DHelper) (vaddr_t *);
 
