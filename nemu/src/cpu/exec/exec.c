@@ -14,6 +14,10 @@ typedef struct {
 #define EMPTY              EX(inv)
 
 static inline void set_width(int width) {
+  /*
+  根据decoding中存储的 is_operand_size_16 标志来决定指令宽度是2个字节（16位）还是4个字节（32位）。
+  is_operand_size_16 标志指示当前是否使用16位操作数大小，如果是，则指令宽度为2个字节，否则为4个字节。
+  */
   if (width == 0) {
     width = decoding.is_operand_size_16 ? 2 : 4;
   }
@@ -211,7 +215,7 @@ static make_EHelper(2byte_esc) {
   set_width(opcode_table[opcode].width);
   idex(eip, &opcode_table[opcode]);
 }
-
+// this is exec_real function in line239
 make_EHelper(real) {
   // 指令的第一个字节, 将其解释成 opcode 并记录在全局译码信息 decoding 
   uint32_t opcode = instr_fetch(eip, 1);

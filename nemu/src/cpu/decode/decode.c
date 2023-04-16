@@ -6,6 +6,8 @@ DecodeInfo decoding;
 rtlreg_t t0, t1, t2, t3;
 const rtlreg_t tzero = 0;
 
+// 操作数译码函数会把操作数的信息记录在结构体 op 中
+// 函数中的load_val参数会控制是否需要将该操作数读出到全局译码信息decoding供后续使用
 #define make_DopHelper(name) void concat(decode_op_, name) (vaddr_t *eip, Operand *op, bool load_val)
 
 /* Refer to Appendix A in i386 manual for the explanations of these abbreviations */
