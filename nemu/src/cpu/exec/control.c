@@ -34,11 +34,11 @@ make_EHelper(call) {
   printf("exec_call end\n");
   print_asm("call %x", decoding.jmp_eip);
 }
-
+/*
 make_EHelper(nop){
   print_asm("nop");
 }
-
+*/
 make_EHelper(ret) {
   //TODO();
   printf("exec_ret start");
