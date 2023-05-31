@@ -17,18 +17,18 @@ static inline uint32_t instr_fetch(vaddr_t *eip, int len) {
     decoding.p += sprintf(decoding.p, "%02x ", p_instr[i]);
   }
 #endif
-  (*eip) += len;
+  (*eip) += len;//更新 eip 的值指向下一条指令的地址
   return instr;
 }
 
 void rtl_setcc(rtlreg_t*, uint8_t);
-
+//根据条件码子码获取对应的条件码名称
 static inline const char* get_cc_name(int subcode) {
   static const char *cc_name[] = {
-    "o", "no", "b", "nb",
-    "e", "ne", "be", "nbe",
-    "s", "ns", "p", "np",
-    "l", "nl", "le", "nle"
+    "o", "no", "b", "nb",//溢出 低位设置
+    "e", "ne", "be", "nbe",//等于 无符号数小于等于
+    "s", "ns", "p", "np",//符号位设置 奇偶校验
+    "l", "nl", "le", "nle"//低位设置 有符号数小于等于 
   };
   return cc_name[subcode];
 }

@@ -2,14 +2,14 @@
 #include "all-instr.h"
 
 typedef struct {
-  DHelper decode;
-  EHelper execute;
-  int width;
+  DHelper decode;//decode fuction
+  EHelper execute;//exe fuction
+  int width;//instruction width
 } opcode_entry;
 
-#define IDEXW(id, ex, w)   {concat(decode_, id), concat(exec_, ex), w}
-#define IDEX(id, ex)       IDEXW(id, ex, 0)
-#define EXW(ex, w)         {NULL, concat(exec_, ex), w}
+#define IDEXW(id, ex, w)   {concat(decode_, id), concat(exec_, ex), w}//IDEXW(G2E,sub,1)
+#define IDEX(id, ex)       IDEXW(id, ex, 0)//IDEXW的一个简化版本，宽度默认为0
+#define EXW(ex, w)         {NULL, concat(exec_, ex), w}//执行函数ex和宽度w的指令条目
 #define EX(ex)             EXW(ex, 0)
 #define EMPTY              EX(inv)
 
@@ -33,7 +33,7 @@ static inline void idex(vaddr_t *eip, opcode_entry *e) {
 }
 
 static make_EHelper(2byte_esc);
-
+// opcode_table_name[8]={item0,item2...itme7} 在编译时根据指令名称生成对应的数组名称，从而实现一组相关指令的定义和处理
 #define make_group(name, item0, item1, item2, item3, item4, item5, item6, item7) \
   static opcode_entry concat(opcode_table_, name) [8] = { \
     /* 0x00 */	item0, item1, item2, item3, \
@@ -41,9 +41,9 @@ static make_EHelper(2byte_esc);
   }; \
 static make_EHelper(name) { \
   idex(eip, &concat(opcode_table_, name)[decoding.ext_opcode]); \
-}
+}//数组的第decoding.ext_opcode个元素
 
-/* 0x80, 0x81, 0x83 */
+/* 0x80, 0x81, 0x83 EX:具有执行函数，但没有指定宽度*/
 make_group(gp1,
     EX(add), EX(or), EX(adc), EX(sbb),
     EX(and), EX(sub), EX(xor), EX(cmp))
@@ -74,6 +74,8 @@ make_group(gp7,
     EMPTY, EMPTY, EMPTY, EMPTY)
 
 /* TODO: Add more instructions!!! */
+//每个数组元素对应一个指令，数组的索引表示指令的操作码
+
 
 opcode_entry opcode_table [512] = {
   /* 0x00 */	EMPTY, EMPTY, EMPTY, EMPTY,
@@ -86,8 +88,8 @@ opcode_entry opcode_table [512] = {
   /* 0x1c */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x20 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x24 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x28 sub */	IDEXW(G2E,sub,1), IDEX(G2E,sub), EMPTY, IDEX(E2G,sub),
-  /* 0x2c sub */	IDEXW(I2a,sub,1), IDEX(I2a,sub), EMPTY, EMPTY,
+  /* 0x28 */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0x2c */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x30 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x34 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x38 */	EMPTY, EMPTY, EMPTY, EMPTY,
@@ -96,10 +98,10 @@ opcode_entry opcode_table [512] = {
   /* 0x44 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x48 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x4c */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x50 push */	IDEX(r,push),IDEX(r,push),IDEX(r,push),IDEX(r,push),
-  /* 0x54 push */	IDEX(r,push),IDEX(r,push),IDEX(r,push),IDEX(r,push),
-  /* 0x58 pop */	IDEX(r,pop),IDEX(r,pop),IDEX(r,pop),IDEX(r,pop),
-  /* 0x5c pop */	EMPTY, IDEX(r,pop),IDEX(r,pop),IDEX(r,pop),
+  /* 0x50 */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0x54 */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0x58 */	EMPTY, EMPTY, EMPTY, EMPTY,
+  /* 0x5c */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x60 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x64 */	EMPTY, EMPTY, EX(operand_size), EMPTY,
   /* 0x68 */	EMPTY, EMPTY, EMPTY, EMPTY,
@@ -134,7 +136,7 @@ opcode_entry opcode_table [512] = {
   /* 0xdc */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xe0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xe4 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0xe8 call pa2 */	IDEX(J,call), IDEX(J,jmp), EMPTY, IDEXW(J,jmp,1),
+  /* 0xe8 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xec */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xf0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xf4 */	EMPTY, EMPTY, IDEXW(E, gp3, 1), IDEX(E, gp3),
@@ -210,9 +212,12 @@ opcode_entry opcode_table [512] = {
 };
 
 static make_EHelper(2byte_esc) {
+  //从指令中读取一个字节作为操作码，并将其与0x100进行按位或运算，得到一个扩展的操作码
   uint32_t opcode = instr_fetch(eip, 1) | 0x100;
   decoding.opcode = opcode;
+  //根据操作码在opcode_table数组中查找相应的执行函数，并设置操作数的宽度(decoding.src.width)
   set_width(opcode_table[opcode].width);
+  //译码和执行(use opcode_table function)
   idex(eip, &opcode_table[opcode]);
 }
 // this is exec_real function in line239
@@ -235,6 +240,7 @@ static inline void update_eip(void) {
 void exec_wrapper(bool print_flag) {
 #ifdef DEBUG
   decoding.p = decoding.asm_buf;
+  //当前指令的地址以十六进制形式写入 decoding.asm_buf 在调试输出中显示指令的地址信息。
   decoding.p += sprintf(decoding.p, "%8x:   ", cpu.eip);
 #endif
   // 首先将当前的%eip 保存到全局译码信息 decoding 的成员 seq_eip 中
@@ -251,7 +257,7 @@ void exec_wrapper(bool print_flag) {
     puts(decoding.asm_buf);
   }
 #endif
-
+//定义了 DIFF_TEST，则调用 difftest_step 函数，传入之前保存的 eip 进行指令级别的差异测试
 #ifdef DIFF_TEST
   uint32_t eip = cpu.eip;
 #endif
