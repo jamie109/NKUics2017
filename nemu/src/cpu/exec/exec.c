@@ -75,8 +75,6 @@ make_group(gp7,
 
 /* TODO: Add more instructions!!! */
 //每个数组元素对应一个指令，数组的索引表示指令的操作码
-
-
 opcode_entry opcode_table [512] = {
   /* 0x00 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x04 */	EMPTY, EMPTY, EMPTY, EMPTY,

@@ -16,10 +16,10 @@ typedef struct {
     uint32_t reg;
     rtlreg_t addr;
     uint32_t imm;
-    int32_t simm;
+    int32_t simm;//有符号立即数操作数的值
   };
   rtlreg_t val;
-  char str[OP_STR_SIZE];
+  char str[OP_STR_SIZE];//操作数的字符串表示，用于调试目的
 } Operand;
 
 typedef struct {
@@ -36,7 +36,7 @@ typedef struct {
   char *p;
 #endif
 } DecodeInfo;
-
+//x86 指令解码中的 ModR/M 字节 指令中的寄存器操作数和内存操作数的寻址方式
 typedef union {
   struct {
     uint8_t R_M		:3;
@@ -44,19 +44,19 @@ typedef union {
     uint8_t mod		:2;
   };
   struct {
-    uint8_t dont_care	:3;
-    uint8_t opcode		:3;
+    uint8_t dont_care	:3;//占位符
+    uint8_t opcode		:3;//ModR/M 字节中的 opcode 字段
   };
-  uint8_t val;
+  uint8_t val;//整体访问联合体的值
 } ModR_M;
-
+//SIB 字节
 typedef union {
   struct {
-    uint8_t base	:3;
-    uint8_t index	:3;
-    uint8_t ss		:2;
+    uint8_t base	:3;//基址
+    uint8_t index	:3;//索引寄存器
+    uint8_t ss		:2;//比例因子
   };
-  uint8_t val;
+  uint8_t val;//整个 SIB 字节的值
 } SIB;
 
 void load_addr(vaddr_t *, ModR_M *, Operand *);

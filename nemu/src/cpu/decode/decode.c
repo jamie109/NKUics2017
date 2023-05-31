@@ -4,9 +4,9 @@
 /* shared by all helper functions */
 DecodeInfo decoding;
 rtlreg_t t0, t1, t2, t3;
-const rtlreg_t tzero = 0;
+const rtlreg_t tzero = 0;//常量寄存器，值为0
 
-// 操作数译码函数会把操作数的信息记录在结构体 op 中
+// 定义操作数译码函数.操作数译码函数会把操作数的信息记录在结构体 op 中
 // 函数中的load_val参数会控制是否需要将该操作数读出到全局译码信息decoding供后续使用
 #define make_DopHelper(name) void concat(decode_op_, name) (vaddr_t *eip, Operand *op, bool load_val)
 
@@ -16,8 +16,8 @@ const rtlreg_t tzero = 0;
 static inline make_DopHelper(I) {
   /* eip here is pointing to the immediate */
   op->type = OP_TYPE_IMM;
-  op->imm = instr_fetch(eip, op->width);
-  rtl_li(&op->val, op->imm);
+  op->imm = instr_fetch(eip, op->width);//立即数值
+  rtl_li(&op->val, op->imm);//将立即数值存储在 op->val 中
 
 #ifdef DEBUG
   snprintf(op->str, OP_STR_SIZE, "$0x%x", op->imm);
