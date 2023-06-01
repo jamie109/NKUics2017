@@ -16,6 +16,7 @@ const rtlreg_t tzero = 0;//常量寄存器，值为0
 static inline make_DopHelper(I) {
   /* eip here is pointing to the immediate */
   op->type = OP_TYPE_IMM;
+  // 它假设在 eip 指向的地址处，指令的前缀已经被处理或者当前指令没有前缀
   op->imm = instr_fetch(eip, op->width);//立即数值
   rtl_li(&op->val, op->imm);//将立即数值存储在 op->val 中
 
@@ -309,7 +310,7 @@ make_DHelper(out_a2dx) {
   sprintf(id_dest->str, "(%%dx)");
 #endif
 }
-
+//将指针 src 指向的数据存储到操作数 op 中
 void operand_write(Operand *op, rtlreg_t* src) {
   if (op->type == OP_TYPE_REG) { rtl_sr(op->reg, op->width, src); }
   else if (op->type == OP_TYPE_MEM) { rtl_sm(&op->addr, op->width, src); }
