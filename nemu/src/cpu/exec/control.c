@@ -45,7 +45,7 @@ make_EHelper(ret) {
   rtl_pop(&t2);
   decoding.jmp_eip = t2;
   decoding.is_jmp = 1;
-  printf("exec_ret end");
+  printf("exec_ret end\n");
   print_asm("ret");
 }
 
