@@ -12,13 +12,20 @@ make_EHelper(call);
 //make_EHelper(nop);
 make_EHelper(push);
 make_EHelper(pop);
-
-make_EHelper(add);
 make_EHelper(sub);
-make_EHelper(adc);
-make_EHelper(cmp);
+make_EHelper(xor);
+make_EHelper(ret);
+// add.c
+make_EHelper(call_rm);
+make_EHelper(jmp_rm);
 make_EHelper(inc);
 make_EHelper(dec);
+
+make_EHelper(add);
+make_EHelper(adc);
+make_EHelper(cmp);
+
+
 make_EHelper(mul);
 make_EHelper(imul1);
 make_EHelper(imul2);
@@ -29,10 +36,10 @@ make_EHelper(idiv);
 make_EHelper(neg);
 
 make_EHelper(jmp);
-make_EHelper(ret);
+
 
 //logical
-make_EHelper(xor);
+
 
 make_EHelper(and);
 make_EHelper(or);
