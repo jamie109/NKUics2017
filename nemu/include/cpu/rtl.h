@@ -153,20 +153,20 @@ static inline void rtl_push(const rtlreg_t* src1) {
   // M[esp] <- src1
   //TODO();
   // 栈顶
-  printf("start rfl_push\n");
+  //printf("start rfl_push\n");
   cpu.esp = cpu.esp - 4;
   rtl_sm(&cpu.esp, 4, src1);
-  printf("finish rfl_push\n");
+  //printf("finish rfl_push\n");
 }
 
 static inline void rtl_pop(rtlreg_t* dest) {
   // dest <- M[esp]
   // esp <- esp + 4
   //TODO();
-  printf("start rfl_pop\n");
+  //printf("start rfl_pop\n");
   rtl_lm(dest, &cpu.esp, 4);
   cpu.esp = cpu.esp + 4;
-  printf("finish rfl_pop\n");
+  //printf("finish rfl_pop\n");
 }
 
 static inline void rtl_eq0(rtlreg_t* dest, const rtlreg_t* src1) {
