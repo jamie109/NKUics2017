@@ -16,6 +16,8 @@ make_EHelper(sub);
 make_EHelper(xor);
 make_EHelper(ret);
 // add.c
+make_EHelper(lea);
+
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
 make_EHelper(inc);
