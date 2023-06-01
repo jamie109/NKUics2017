@@ -210,6 +210,7 @@ opcode_entry opcode_table [512] = {
 };
 
 static make_EHelper(2byte_esc) {
+  printf("2byte\n");
   //从指令中读取一个字节作为操作码，并将其与0x100进行按位或运算，得到一个扩展的操作码
   uint32_t opcode = instr_fetch(eip, 1) | 0x100;
   decoding.opcode = opcode;
