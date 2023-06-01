@@ -17,6 +17,7 @@ make_EHelper(xor);
 make_EHelper(ret);
 // add.c
 make_EHelper(lea);
+make_EHelper(and);
 
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
@@ -42,8 +43,6 @@ make_EHelper(jmp);
 
 //logical
 
-
-make_EHelper(and);
 make_EHelper(or);
 make_EHelper(not);
 make_EHelper(setcc);
