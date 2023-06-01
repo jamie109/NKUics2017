@@ -2,7 +2,7 @@
 
 make_EHelper(add) {
   //TODO();
-  printf("exec_add start\n");
+  //printf("exec_add start\n");
   rtl_add(&t2,&id_dest->val,&id_src->val);
   operand_write(id_dest,&t2);
   rtl_update_ZFSF(&t2,id_dest->width);
@@ -21,7 +21,7 @@ make_EHelper(add) {
 
 make_EHelper(sub) {
   //TODO();
-  printf("exec_sub start\n");
+  //printf("exec_sub start\n");
   rtl_sub(&t2,&id_dest->val,&id_src->val);
   operand_write(id_dest,&t2);
 
