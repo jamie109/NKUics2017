@@ -64,6 +64,7 @@ make_EHelper(shr) {
 }
 
 make_EHelper(setcc) {
+  printf("exec_setcc start\n");
   uint8_t subcode = decoding.opcode & 0xf;
   rtl_setcc(&t2, subcode);
   operand_write(id_dest, &t2);
