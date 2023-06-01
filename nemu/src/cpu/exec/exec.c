@@ -217,6 +217,7 @@ static make_EHelper(2byte_esc) {
   //根据操作码在opcode_table数组中查找相应的执行函数，并设置操作数的宽度(decoding.src.width)
   set_width(opcode_table[opcode].width);
   printf("idex before\n");
+  printf(" %d\n",  opcode );
   //译码和执行(use opcode_table function)
   idex(eip, &opcode_table[opcode]);
   printf("idex afert\n");
