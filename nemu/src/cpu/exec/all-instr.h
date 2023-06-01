@@ -22,6 +22,8 @@ make_EHelper(nop);
 make_EHelper(add);
 make_EHelper(cmp);
 make_EHelper(setcc);
+make_EHelper(movzx);
+make_EHelper(movsx);
 
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
