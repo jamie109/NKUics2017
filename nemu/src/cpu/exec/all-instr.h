@@ -19,13 +19,16 @@ make_EHelper(ret);
 make_EHelper(lea);
 make_EHelper(and);
 make_EHelper(nop);
+make_EHelper(add);
+make_EHelper(cmp);
+make_EHelper(setcc);
 
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
 make_EHelper(inc);
 make_EHelper(dec);
 
-make_EHelper(add);
+
 make_EHelper(adc);
 make_EHelper(cmp);
 
