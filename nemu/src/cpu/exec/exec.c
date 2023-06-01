@@ -210,17 +210,17 @@ opcode_entry opcode_table [512] = {
 };
 
 static make_EHelper(2byte_esc) {
-  printf("2byte\n");
+  //printf("2byte\n");
   //从指令中读取一个字节作为操作码，并将其与0x100进行按位或运算，得到一个扩展的操作码
   uint32_t opcode = instr_fetch(eip, 1) | 0x100;
   decoding.opcode = opcode;
   //根据操作码在opcode_table数组中查找相应的执行函数，并设置操作数的宽度(decoding.src.width)
   set_width(opcode_table[opcode].width);
-  printf("idex before\n");
-  printf(" %d\n",  opcode );
+  //printf("idex before\n");
+  //printf(" %d\n",  opcode );
   //译码和执行(use opcode_table function)
   idex(eip, &opcode_table[opcode]);
-  printf("idex afert\n");
+  //printf("idex afert\n");
 }
 // this is exec_real function in line239
 make_EHelper(real) {
