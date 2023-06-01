@@ -9,15 +9,16 @@ make_EHelper(nemu_trap);
 
 // pa2 add----stage1
 make_EHelper(call);
-//make_EHelper(nop);
 make_EHelper(push);
 make_EHelper(pop);
 make_EHelper(sub);
 make_EHelper(xor);
 make_EHelper(ret);
+
 // add.c
 make_EHelper(lea);
 make_EHelper(and);
+make_EHelper(nop);
 
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
