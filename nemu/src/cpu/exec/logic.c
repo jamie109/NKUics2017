@@ -23,7 +23,7 @@ make_EHelper(xor) {
   rtl_update_ZFSF(&t2,id_dest->width);
   rtl_set_CF(&tzero);
   rtl_set_OF(&tzero);
-
+  printf("exec_xor end\n");
   print_asm_template2(xor);
 }
 
