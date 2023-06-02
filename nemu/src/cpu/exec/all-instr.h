@@ -26,6 +26,8 @@ make_EHelper(movzx);
 make_EHelper(movsx);
 make_EHelper(test);
 make_EHelper(jcc);
+//add-longlong.c
+make_EHelper(adc);
 
 make_EHelper(cltd);
 make_EHelper(cwtl);
@@ -35,9 +37,6 @@ make_EHelper(jmp_rm);
 make_EHelper(inc);
 make_EHelper(dec);
 
-
-make_EHelper(adc);
-make_EHelper(cmp);
 
 
 make_EHelper(mul);
