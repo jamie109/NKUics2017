@@ -15,7 +15,7 @@ make_EHelper(add) {
   rtl_and(&t0,&t0,&t1);
   rtl_msb(&t0,&t0,id_dest->width);
   rtl_set_OF(&t0);
-  printf("exec_add end\n");  
+  //printf("exec_add end\n");  
   print_asm_template2(add);
 }
 
@@ -35,7 +35,7 @@ make_EHelper(sub) {
   rtl_and(&t0,&t0,&t1);
   rtl_msb(&t0,&t0,id_dest->width);
   rtl_set_OF(&t0);
-  printf("exec_sub end\n");
+  //printf("exec_sub end\n");
   print_asm_template2(sub);
 }
 
@@ -53,7 +53,7 @@ make_EHelper(cmp) {
   rtl_and(&t0,&t0,&t1);
   rtl_msb(&t0,&t0,id_dest->width);
   rtl_set_OF(&t0);
-  printf("exec_cmp end\n");
+  //printf("exec_cmp end\n");
   print_asm_template2(cmp);
 }
 
@@ -64,7 +64,7 @@ make_EHelper(inc) {
   rtl_update_ZFSF(&t2,id_dest->width);
   rtl_eqi(&t0,&t2,0x80000000);
   rtl_set_OF(&t0);
-  printf("exec_inc end\n");
+  //printf("exec_inc end\n");
   print_asm_template1(inc);
 }
 
@@ -75,7 +75,7 @@ make_EHelper(dec) {
   rtl_update_ZFSF(&t2,id_dest->width);
   rtl_eqi(&t0,&t2,0x7fffffff);
   rtl_set_OF(&t0);
-  printf("exec_dec end\n");
+  //printf("exec_dec end\n");
   print_asm_template1(dec);
 }
 
@@ -110,7 +110,7 @@ make_EHelper(adc) {
   rtl_and(&t0, &t0, &t1);
   rtl_msb(&t0, &t0, id_dest->width);
   rtl_set_OF(&t0);
-  printf("exec_adc end\n");
+  //printf("exec_adc end\n");
   print_asm_template2(adc);
 }
 
@@ -132,7 +132,7 @@ make_EHelper(sbb) {
   rtl_and(&t0, &t0, &t1);
   rtl_msb(&t0, &t0, id_dest->width);
   rtl_set_OF(&t0);
-  printf("exec_sbb end\n");
+  //printf("exec_sbb end\n");
   print_asm_template2(sbb);
 }
 

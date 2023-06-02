@@ -6,7 +6,7 @@ make_EHelper(test) {
   rtl_update_ZFSF(&t2,id_dest->width);
   rtl_set_CF(&tzero);
   rtl_set_OF(&tzero);
-  printf("exec_test end\n");
+  //printf("exec_test end\n");
   print_asm_template2(test);
 }
 
@@ -17,7 +17,7 @@ make_EHelper(and) {
   rtl_set_CF(&tzero);
   rtl_set_OF(&tzero);
   rtl_update_ZFSF(&t2,id_dest->width);
-  printf("exec_and end\n");
+  //printf("exec_and end\n");
   print_asm_template2(and);
 }
 
@@ -28,7 +28,7 @@ make_EHelper(xor) {
   rtl_update_ZFSF(&t2,id_dest->width);
   rtl_set_CF(&tzero);
   rtl_set_OF(&tzero);
-  printf("exec_xor end\n");
+  //printf("exec_xor end\n");
   print_asm_template2(xor);
 }
 
@@ -39,7 +39,7 @@ make_EHelper(or) {
   rtl_update_ZFSF(&t2,id_dest->width);
   rtl_set_CF(&tzero);
   rtl_set_OF(&tzero);
-  printf("exec_or end\n");
+  //printf("exec_or end\n");
   print_asm_template2(or);
 }
 
@@ -50,7 +50,7 @@ make_EHelper(sar) {
   rtl_sar(&t2,&t2,&id_src->val);
   operand_write(id_dest,&t2);
   rtl_update_ZFSF(&t2,id_dest->width);
-  printf("exec_sar end\n");
+  //printf("exec_sar end\n");
   print_asm_template2(sar);
 }
 
@@ -60,7 +60,7 @@ make_EHelper(shl) {
   rtl_shl(&t2,&id_dest->val,&id_src->val);
   operand_write(id_dest,&t2);
   rtl_update_ZFSF(&t2,id_dest->width);
-  printf("exec_shl end\n");
+  //printf("exec_shl end\n");
   print_asm_template2(shl);
 }
 
@@ -70,7 +70,7 @@ make_EHelper(shr) {
   rtl_shr(&t2,&id_dest->val,&id_src->val);
   operand_write(id_dest,&t2);
   rtl_update_ZFSF(&t2,id_dest->width);
-  printf("exec_shr end\n");
+  //printf("exec_shr end\n");
   print_asm_template2(shr);
 }
 
@@ -79,7 +79,7 @@ make_EHelper(setcc) {
   uint8_t subcode = decoding.opcode & 0xf;
   rtl_setcc(&t2, subcode);
   operand_write(id_dest, &t2);
-  printf("exec_setcc end\n");
+  //printf("exec_setcc end\n");
   print_asm("set%s %s", get_cc_name(subcode), id_dest->str);
 }
 
@@ -87,6 +87,6 @@ make_EHelper(not) {
   //TODO();
   rtl_not(&id_dest->val);
   operand_write(id_dest,&id_dest->val);
-  printf("exec_not end\n");
+  //printf("exec_not end\n");
   print_asm_template1(not);
 }
