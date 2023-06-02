@@ -24,6 +24,8 @@ make_EHelper(cmp);
 make_EHelper(setcc);
 make_EHelper(movzx);
 make_EHelper(movsx);
+make_EHelper(test);
+make_EHelper(jcc);
 
 make_EHelper(cltd);
 make_EHelper(cwtl);
@@ -54,7 +56,7 @@ make_EHelper(jmp);
 
 make_EHelper(or);
 make_EHelper(not);
-make_EHelper(test);
+
 make_EHelper(sar);
 make_EHelper(shl);
 make_EHelper(shr);
