@@ -90,3 +90,12 @@ make_EHelper(not) {
   //printf("exec_not end\n");
   print_asm_template1(not);
 }
+// add rol
+make_EHelper(rol){
+    rtl_shri(&t2,&id_dest->val,id_dest->width*8-id_src->val);
+    rtl_shl(&t3,&id_dest->val,&id_src->val);
+    rtl_or(&t1,&t2,&t3);
+    operand_write(id_dest,&t1);
+
+    print_asm_template2(rol);
+}

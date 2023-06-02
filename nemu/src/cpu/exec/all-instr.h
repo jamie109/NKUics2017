@@ -52,6 +52,8 @@ make_EHelper(sbb);
 //串口
 make_EHelper(in);
 make_EHelper(out);
+//time
+make_EHelper(rol);
 
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
@@ -62,7 +64,3 @@ make_EHelper(idiv);
 make_EHelper(neg);
 
 make_EHelper(jmp);
-
-
-//logical
-make_EHelper(rol);
