@@ -41,23 +41,32 @@ make_EHelper(leave) {
 
 make_EHelper(cltd) {
   if (decoding.is_operand_size_16) {
-    TODO();
+    // TODO();
+    rtl_lr_w(&t0,R_AX);
+    rtl_sext(&t0,&t0,2);
+    rtl_sari(&t0,&t0,31);
+    rtl_sr_w(R_DX,&t0);
   }
   else {
-    TODO();
+    // TODO();
+    rtl_sari(&cpu.edx,&cpu.eax,31);
   }
-
+  printf("exec_cltd end\n");
   print_asm(decoding.is_operand_size_16 ? "cwtl" : "cltd");
 }
 
 make_EHelper(cwtl) {
   if (decoding.is_operand_size_16) {
-    TODO();
+    // TODO();
+    rtl_sext(&t0,&cpu.eax,1);
+    cpu.eax=(cpu.eax&0xffff0000)|(t0&0xffff);
   }
   else {
-    TODO();
+    // TODO();
+    rtl_sext(&t0,&cpu.eax,2);
+    cpu.eax=t0;
   }
-
+  printf("exec_cwtl end\n");
   print_asm(decoding.is_operand_size_16 ? "cbtw" : "cwtl");
 }
 
