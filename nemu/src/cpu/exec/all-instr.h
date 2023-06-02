@@ -48,6 +48,11 @@ make_EHelper(cwtl);
 make_EHelper(leave);
 //sub-longlong
 make_EHelper(sbb);
+
+//串口
+make_EHelper(in);
+make_EHelper(out);
+
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
 
@@ -60,9 +65,4 @@ make_EHelper(jmp);
 
 
 //logical
-
-
-
-
-
 make_EHelper(rol);
