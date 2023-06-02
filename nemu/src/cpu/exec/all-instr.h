@@ -46,14 +46,12 @@ make_EHelper(cltd);
 make_EHelper(cwtl);
 //hello-str.c
 make_EHelper(leave);
+//sub-longlong
+make_EHelper(sbb);
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
 
 
-
-
-
-make_EHelper(sbb);
 make_EHelper(div);
 make_EHelper(idiv);
 make_EHelper(neg);
