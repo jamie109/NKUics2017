@@ -28,6 +28,7 @@ make_EHelper(test);
 make_EHelper(jcc);
 //add-longlong.c
 make_EHelper(adc);
+make_EHelper(or);
 
 make_EHelper(cltd);
 make_EHelper(cwtl);
@@ -53,7 +54,7 @@ make_EHelper(jmp);
 
 //logical
 
-make_EHelper(or);
+
 make_EHelper(not);
 
 make_EHelper(sar);
