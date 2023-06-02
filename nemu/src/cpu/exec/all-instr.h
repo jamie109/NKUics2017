@@ -36,6 +36,11 @@ make_EHelper(shr);
 make_EHelper(inc);
 make_EHelper(dec);
 make_EHelper(not);
+//fact.c
+make_EHelper(mul);
+make_EHelper(imul1);
+make_EHelper(imul2);
+make_EHelper(imul3);
 
 make_EHelper(cltd);
 make_EHelper(cwtl);
@@ -46,10 +51,7 @@ make_EHelper(jmp_rm);
 
 
 
-make_EHelper(mul);
-make_EHelper(imul1);
-make_EHelper(imul2);
-make_EHelper(imul3);
+
 make_EHelper(sbb);
 make_EHelper(div);
 make_EHelper(idiv);
