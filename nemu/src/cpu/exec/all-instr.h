@@ -29,17 +29,20 @@ make_EHelper(jcc);
 //add-longlong.c
 make_EHelper(adc);
 make_EHelper(or);
+//bit.c
 make_EHelper(sar);
 make_EHelper(shl);
 make_EHelper(shr);
+make_EHelper(inc);
+make_EHelper(dec);
+make_EHelper(not);
 
 make_EHelper(cltd);
 make_EHelper(cwtl);
 
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
-make_EHelper(inc);
-make_EHelper(dec);
+
 
 
 
@@ -58,7 +61,7 @@ make_EHelper(jmp);
 //logical
 
 
-make_EHelper(not);
+
 
 
 make_EHelper(rol);
