@@ -44,28 +44,38 @@ make_EHelper(or) {
 }
 
 make_EHelper(sar) {
-  TODO();
+  //TODO();
   // unnecessary to update CF and OF in NEMU
-
+  rtl_sext(&t2,&id_dest->val,id_dest->width);
+  rtl_sar(&t2,&t2,&id_src->val);
+  operand_write(id_dest,&t2);
+  rtl_update_ZFSF(&t2,id_dest->width);
+  printf("exec_sar end\n");
   print_asm_template2(sar);
 }
 
 make_EHelper(shl) {
-  TODO();
+  //TODO();
   // unnecessary to update CF and OF in NEMU
-
+  rtl_shl(&t2,&id_dest->val,&id_src->val);
+  operand_write(id_dest,&t2);
+  rtl_update_ZFSF(&t2,id_dest->width);
+  printf("exec_shl end\n");
   print_asm_template2(shl);
 }
 
 make_EHelper(shr) {
-  TODO();
+  //TODO();
   // unnecessary to update CF and OF in NEMU
-
+  rtl_shr(&t2,&id_dest->val,&id_src->val);
+  operand_write(id_dest,&t2);
+  rtl_update_ZFSF(&t2,id_dest->width);
+  printf("exec_shr end\n");
   print_asm_template2(shr);
 }
 
 make_EHelper(setcc) {
-  printf("exec_setcc start\n");
+  //printf("exec_setcc start\n");
   uint8_t subcode = decoding.opcode & 0xf;
   rtl_setcc(&t2, subcode);
   operand_write(id_dest, &t2);
