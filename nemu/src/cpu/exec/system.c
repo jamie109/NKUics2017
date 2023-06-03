@@ -31,10 +31,10 @@ make_EHelper(mov_cr2r) {
 
 make_EHelper(int) {
   //TODO();
-  printf("make_EHelper(int) start\n");
+  //printf("make_EHelper(int) start\n");
   raise_intr(id_dest->val, decoding.seq_eip);
   print_asm("int %s", id_dest->str);
-  printf("make_EHelper(int) end\n");
+  //printf("make_EHelper(int) end\n");
 #ifdef DIFF_TEST
   diff_test_skip_nemu();
 #endif

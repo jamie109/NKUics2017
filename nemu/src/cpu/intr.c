@@ -23,7 +23,7 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
   t1&=0xffff0000;
   decoding.jmp_eip = (t0 & 0xffff)|t1;
   decoding.is_jmp = 1;
-  printf("this is raise_intr\n");
+  //printf("this is raise_intr\n");
 }
 
 void dev_raise_intr() {
