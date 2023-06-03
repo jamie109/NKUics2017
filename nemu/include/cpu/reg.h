@@ -43,7 +43,7 @@ typedef struct {
 
   vaddr_t eip;
   // add for pa2
-union{
+union{//add union for pa3
   struct {
       uint32_t CF:1;
       uint32_t one:1;
