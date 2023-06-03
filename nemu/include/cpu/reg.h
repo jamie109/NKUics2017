@@ -43,18 +43,27 @@ typedef struct {
 
   vaddr_t eip;
   // add for pa2
-  struct bs{
-      unsigned int CF:1;
-      unsigned int one:1;
-      unsigned int :4;
-      unsigned int ZF:1;
-      unsigned int SF:1;
-      unsigned int :1;
-      unsigned int IF:1;
-      unsigned int :1;
-      unsigned int OF:1;
-      unsigned int :20;
+union{
+  struct {
+      uint32_t CF:1;
+      uint32_t one:1;
+      uint32_t :4;
+      uint32_t ZF:1;
+      uint32_t SF:1;
+      uint32_t :1;
+      uint32_t IF:1;
+      uint32_t :1;
+      uint32_t OF:1;
+      uint32_t :20;
   }eflags;
+   uint32_t eflags_pa3;
+};
+  //pa3 add
+  uint32_t cs;
+  struct{
+    uint32_t base;
+    uint16_t limit;
+  } idtr;
 
 } CPU_state;
 

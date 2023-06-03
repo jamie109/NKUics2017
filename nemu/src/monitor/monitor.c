@@ -85,6 +85,8 @@ static inline void restart() {
   // pa2
   unsigned int origin = 2;
   memcpy(&cpu.eflags,&origin,sizeof(cpu.eflags));
+  //pa3
+  cpu.cs = 8;//cs寄存器需要初始化为8
 
 #ifdef DIFF_TEST
   init_qemu_reg();
