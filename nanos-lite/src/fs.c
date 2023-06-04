@@ -3,15 +3,15 @@
 typedef struct {
   char *name;
   size_t size;
-  //off_t disk_offset;
   off_t disk_offset;
-  off_t open_offset;
+  off_t open_offset;//目前文件操作的位置
 } Finfo;
 
 enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB, FD_EVENTS, FD_DISPINFO, FD_NORMAL};
 
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
+  //stdin,stdout 和 stderr 的占位表项,它们只是为了保证我们的简易文件系统和约定的标准输 入输出的文件描述符保持一致
   {"stdin (note that this is not the actual stdin)", 0, 0},
   {"stdout (note that this is not the actual stdout)", 0, 0},
   {"stderr (note that this is not the actual stderr)", 0, 0},
@@ -22,14 +22,65 @@ static Finfo file_table[] __attribute__((used)) = {
 };
 
 #define NR_FILES (sizeof(file_table) / sizeof(file_table[0]))
-
+extern void ramdisk_read(void *buf, off_t offset, size_t len);
 extern void ramdisk_write(const void *buf, off_t offset, size_t len);
 extern void fb_write(const void *buf, off_t offset, size_t len);
+extern void dispinfo_read(void *buf, off_t offset, size_t len);
+extern size_t events_read(void *buf, size_t len);
+
 void init_fs() {
   // TODO: initialize the size of /dev/fb
 }
 size_t fs_filesz(int fd){
   return file_table[fd].size;
+}
+
+int fs_open(const char* path, int flags, int mode){
+  Log("[fs_open]Pathname: %s", path);
+  for(int i = 0; i<NR_FILES; i++){
+    if(strcmp(file_table[i].name, path) == 0){
+      return i;
+    }
+  }
+  assert(0);
+  return -1;
+}
+
+ssize_t fs_read(int fd, void* buf, size_t len){
+  ssize_t f_size = fs_filesz(fd);
+  if(file_table[fd].open_offset + len > f_size){
+    len = f_size - file_table[fd].open_offset;
+  }
+  switch(fd){
+    case FD_STDIN:
+    case FD_STDOUT:
+    case FD_STDERR:{
+      return 0;
+      break;
+    }
+    case FD_EVENTS:{
+      len = events_read(buf, len);
+      break;
+    }
+    case FD_DISPINFO:{
+      dispinfo_read(buf, file_table[fd].open_offset, len);
+      file_table[fd].open_offset += len;
+      break;
+    }
+    default:{
+      Log("[fs_read]read %s from %d,open_offset:%d,disk_offset:%d,len:%d",
+      file_table[fd].name,
+      file_table[fd].disk_offset + file_table[fd].open_offset,
+      file_table[fd].open_offset,
+      file_table[fd].disk_offset,
+      len);
+      ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+      file_table[fd].open_offset += len;
+      Log("[fs_read]read finish");
+      break;
+    }
+  }
+  return len;
 }
 
 ssize_t fs_write(int fd, const void* buf, size_t len){
@@ -53,16 +104,53 @@ ssize_t fs_write(int fd, const void* buf, size_t len){
       if(file_table[fd].open_offset + len > f_size){
         len = f_size - file_table[fd].open_offset;
       }
-      // Log("Writing %s..open_offset:%d,disk_offset:%d,len:%d",
-      // file_table[fd].name,
-      // file_table[fd].open_offset,
-      // file_table[fd].disk_offset,
-      // len);
+      Log("[fs_write]write %s,open_offset:%d,disk_offset:%d,len:%d",
+      file_table[fd].name,
+      file_table[fd].open_offset,
+      file_table[fd].disk_offset,
+      len);
       ramdisk_write(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
       file_table[fd].open_offset += len;
+      Log("[fs_write]write finish");
       break;
     }
   }
   return len;
 }
 
+int fs_close(int fd){
+  Log("[fs_close]Closing %s with fd:%d..",
+    file_table[fd].name,
+    fd);
+  return 0;
+}
+
+off_t fs_lseek(int fd, off_t offset, int whence){
+  off_t ret = -1;
+  switch(whence){
+    case SEEK_SET:{
+      if(offset>=0 && offset<=file_table[fd].size){
+        file_table[fd].open_offset = offset;
+        ret = file_table[fd].open_offset;
+      }
+      break;
+    }
+    case SEEK_CUR:{
+      if(offset+file_table[fd].open_offset>=0 && offset+file_table[fd].open_offset<=file_table[fd].size){
+        file_table[fd].open_offset += offset;
+        ret = file_table[fd].open_offset;
+      }
+      break;
+    }
+    case SEEK_END:{
+      file_table[fd].open_offset = file_table[fd].size + offset;
+      ret = file_table[fd].open_offset;
+      break;
+    }
+    default:{
+      Log("undefined whence..");
+      assert(0);
+    }
+  }
+  return ret;
+}
