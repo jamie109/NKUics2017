@@ -27,11 +27,12 @@ int main() {
 #ifdef HAS_ASYE
   Log("Initializing interrupt/exception handler...");
   init_irq();
+  
 #endif
 
   init_fs();
 
-  uint32_t entry = loader(NULL, NULL);
+  uint32_t entry = loader(NULL, "/bin/hello");
   ((void (*)(void))entry)();
   // uint32_t entry = loader(NULL, "/bin/hello");
   // ((void (*)(void))entry)();
