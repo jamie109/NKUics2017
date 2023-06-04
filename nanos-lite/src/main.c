@@ -32,9 +32,10 @@ int main() {
 
   init_fs();
   //Log("loader bin/text");
-  uint32_t entry = loader(NULL, "/bin/dummy");
+  //uint32_t entry = loader(NULL, "/bin/dummy");
+  uint32_t entry = loader(NULL, "/bin/hello");
+ // uint32_t entry = loader(NULL, "/bin/text");
   ((void (*)(void))entry)();
-  // uint32_t entry = loader(NULL, "/bin/hello");
-  // ((void (*)(void))entry)();
+  
   panic("Should not reach here");
 }
