@@ -24,7 +24,7 @@ static inline int sys_write(_RegSet *r) {
   int len = SYSCALL_ARG4(r);
 
   if(fd == 1 || fd == 2){
-    Log("buffer:%s", (char*)buf);
+    //Log("buffer:%s", (char*)buf);
     for(int i = 0; i < len; i++){
       _putc(buf[i]);
     }
