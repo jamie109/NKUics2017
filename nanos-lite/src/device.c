@@ -45,7 +45,13 @@ size_t events_read(void *buf, size_t len) {
     sprintf(buf, "t %d\n", ut);
   } 
   else {
-    sprintf(buf, "%s %s\n", is_down ? "kd" : "ku", keyname[key]);
+    if (is_down)
+      sprintf(buf, "%s %s\n", "kd", keyname[key]);
+    else
+    {
+      sprintf(buf, "%s %s\n", "ku", keyname[key]);
+    }
+    
   }
   
   return strlen(buf);
