@@ -89,12 +89,13 @@ ssize_t fs_write(int fd, const void* buf, size_t len){
   Log("arg invalid:fd<3");
   return 0;
   }
-  int n = fs_filesz(fd) - get_open_offset(fd);
+  int f_offset = file_table[fd].open_offset;
+  int n = fs_filesz(fd) - f_offset;
   if(n > len) {
     n = len;
   }
-  ramdisk_write(buf, disk_offset(fd) + get_open_offset(fd), n);
-  set_open_offset(fd, get_open_offset(fd) + n);
+  ramdisk_write(buf, file_table[fd].disk_offset + f_offset, n);
+  file_table[fd].open_offset = f_offset + n;
 
   Log("Write %s. open_offset:%d,disk_offset:%d,len:%d",
       file_table[fd].name,
