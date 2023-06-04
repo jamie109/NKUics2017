@@ -46,7 +46,7 @@ make_EHelper(iret) {
   decoding.is_jmp=1;
   rtl_pop(&cpu.cs);
   rtl_pop(&cpu.eflags_pa3);
-  printf("make_EHelper(iret) end\n");
+  //printf("make_EHelper(iret) end\n");
   print_asm("iret");
 }
 
