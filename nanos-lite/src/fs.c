@@ -53,48 +53,30 @@ int fs_open(const char* path, int flags, int mode){
 }
 
 ssize_t fs_read(int fd, void* buf, size_t len){
+  Log("fs_read fd=%d",fd);
+  if(fd>=NR_FILES)
+    assert(0);
+  if(fd < 3){
+    Log("fd(%d) < 3",fd);
+    return 0;
+  }
+    
   ssize_t f_size = fs_filesz(fd);
-  if(file_table[fd].open_offset + len > f_size){
+  if(file_table[fd].open_offset + len >= f_size){
     len = f_size - file_table[fd].open_offset;
   }
-  switch(fd){
-    case FD_STDIN:
-    case FD_STDOUT:
-    case FD_STDERR:{
-      return 0;
-      break;
-    }
-    case FD_EVENTS:{
-      len = events_read(buf, len);
-      break;
-    }
-    case FD_DISPINFO:{
-      dispinfo_read(buf, file_table[fd].open_offset, len);
-      file_table[fd].open_offset += len;
-      break;
-    }
-    default:{
-      Log("read %s from %d,open_offset:%d,disk_offset:%d,len:%d",
-      file_table[fd].name,
-      file_table[fd].disk_offset + file_table[fd].open_offset,
-      file_table[fd].open_offset,
-      file_table[fd].disk_offset,
-      len);
-      ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
-      file_table[fd].open_offset += len;
-      Log("read finish");
-      break;
-    }
-  }
+  ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+  file_table[fd].open_offset += len;
+  Log("read finish");
   return len;
 }
 
 ssize_t fs_write(int fd, const void* buf, size_t len){
-  Log("write %s,open_offset:%d,disk_offset:%d,len:%d",
-      file_table[fd].name,
-      file_table[fd].open_offset,
-      file_table[fd].disk_offset,
-      len);
+  // Log("write %s,open_offset:%d,disk_offset:%d,len:%d",
+  //     file_table[fd].name,
+  //     file_table[fd].open_offset,
+  //     file_table[fd].disk_offset,
+  //     len);
   ssize_t f_size = fs_filesz(fd);
   switch(fd){
     case FD_STDOUT:
