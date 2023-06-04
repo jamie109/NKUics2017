@@ -10,29 +10,45 @@ static const char *keyname[256] __attribute__((used)) = {
 
 size_t events_read(void *buf, size_t len) {
   //pa3
-  char buffer[40];
+  // char buffer[40];
+  // int key = _read_key();
+  // int down = 0;
+  // if(key & 0x8000) {
+  //     key ^= 0x8000;
+  //     down = 1;
+  // }
+
+  // if(key != _KEY_NONE) {
+  //     //if(down == 1)
+  //     printf("get key\n");
+  //     //sprintf(buffer, "%s %s\n", down ? "kd": "ku", keyname[key]);
+  //     sprintf(buffer, "get %s\n", keyname[key]);
+  //     //Log("receive %s",keyname[key]);
+  // }
+  // else {
+  //     sprintf(buffer,"t %d\n", _uptime());
+  // }
+  // if(strlen(buffer) <= len) { 
+  //   strncpy((char*)buf, buffer,strlen(buffer));
+  //   return strlen(buffer);
+  // } 
+  // Log("strlen(event)>len, return 0");
+  // return 0;
   int key = _read_key();
-  int down = 0;
-  if(key & 0x8000) {
-      key ^= 0x8000;
-      down = 1;
+  bool is_down = false;
+  if(key & 0x8000 ) {
+    key ^= 0x8000;
+    is_down = true;
   }
-  if(key != _KEY_NONE) {
-      if(down == 1)
-      printf("get key\n");
-      //sprintf(buffer, "%s %s\n", down ? "kd": "ku", keyname[key]);
-      sprintf(buffer, "get %s\n", keyname[key]);
-      //Log("receive %s",keyname[key]);
-  }
-  else {
-      sprintf(buffer,"t %d\n", _uptime());
-  }
-  if(strlen(buffer) <= len) { 
-    strncpy((char*)buf, buffer,strlen(buffer));
-    return strlen(buffer);
+  if(key == _KEY_NONE) {
+    uint32_t ut = _uptime();
+    sprintf(buf, "t %d\n", ut);
   } 
-  Log("strlen(event)>len, return 0");
-  return 0;
+  else {
+    sprintf(buf, "%s %s\n", is_down ? "kd" : "ku", keyname[key]);
+  }
+  
+  return strlen(buf);
 }
 
 static char dispinfo[128] __attribute__((used));
