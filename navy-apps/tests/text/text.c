@@ -13,6 +13,8 @@ int main() {
   int i, n;
   for (i = 500; i < 1000; i ++) {
     fscanf(fp, "%d", &n);
+    // if(n != i + 1)
+    //   Log("n = %d, i = %d", n,i);
     assert(n == i + 1);
   }
 
