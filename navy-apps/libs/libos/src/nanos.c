@@ -35,8 +35,8 @@ static intptr_t brk = (intptr_t)&_end;//记录开始位置
 void *_sbrk(intptr_t increment){
   intptr_t ori_brk = brk;
   intptr_t new_brk = ori_brk + increment;//增加后的位置
-  char a[]="this is _sbrk\n";
-  write(66,a,sizeof(a));
+  //char a[]="this is _sbrk\n";
+  //write(66,a,sizeof(a));
   if(_syscall_(SYS_brk, new_brk, 0, 0) == 0){// 系统调用
     brk = new_brk;
     return (void*) ori_brk;//旧 program break 的位置
