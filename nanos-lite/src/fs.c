@@ -62,6 +62,7 @@ int fs_open(const char* path, int flags, int mode){
     if(strcmp(file_table[i].name, path) == 0){
      // Log("find it, i=%d",i);
       return i;
+      printf("i\n");
     }
   }
   assert(0);
