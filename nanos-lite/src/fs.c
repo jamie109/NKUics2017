@@ -34,7 +34,7 @@ void init_fs() {
   int height = 0;
   getScreen(&width, &height);
   file_table[FD_FB].size = width * height * sizeof(u_int32_t);
-  Log("set FD_FB size = %d", file_table[FD_FB].size);
+  //Log("set FD_FB size = %d", file_table[FD_FB].size);
 }
 //help functions
 size_t fs_filesz(int fd){
@@ -57,10 +57,10 @@ void set_open_offset(int fd, off_t n){
 }
 
 int fs_open(const char* path, int flags, int mode){
-  Log("Pathname: %s", path);
+  //Log("Pathname: %s", path);
   for(int i = 0; i<NR_FILES; i++){
     if(strcmp(file_table[i].name, path) == 0){
-      Log("find it, i=%d",i);
+     // Log("find it, i=%d",i);
       return i;
     }
   }
@@ -88,12 +88,12 @@ ssize_t fs_read(int fd, void* buf, size_t len){
   else
     ramdisk_read(buf, disk_offset(fd) + file_table[fd].open_offset, n);
   file_table[fd].open_offset = file_table[fd].open_offset + n;
-  Log("Read %s from %d. open_offset:%d,disk_offset:%d,len:%d",
-      file_table[fd].name,
-      file_table[fd].disk_offset + file_table[fd].open_offset,
-      file_table[fd].open_offset,
-      file_table[fd].disk_offset,
-      len);
+  // Log("Read %s from %d. open_offset:%d,disk_offset:%d,len:%d",
+  //     file_table[fd].name,
+  //     file_table[fd].disk_offset + file_table[fd].open_offset,
+  //     file_table[fd].open_offset,
+  //     file_table[fd].disk_offset,
+  //     len);
   return n;
 }
 extern void fb_write(const void *buf, off_t offset, size_t len);
@@ -124,11 +124,11 @@ ssize_t fs_write(int fd, const void* buf, size_t len){
  }
   file_table[fd].open_offset = f_offset + n;
 
-  Log("Write %s. open_offset:%d,disk_offset:%d,len:%d",
-      file_table[fd].name,
-      file_table[fd].open_offset,
-      file_table[fd].disk_offset,
-      len);
+  // Log("Write %s. open_offset:%d,disk_offset:%d,len:%d",
+  //     file_table[fd].name,
+  //     file_table[fd].open_offset,
+  //     file_table[fd].disk_offset,
+  //     len);
   return len;
 }
 
