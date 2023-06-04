@@ -69,12 +69,12 @@ ssize_t fs_read(int fd, void* buf, size_t len){
     Log("arg invalid:fd<3"); 
     return 0; 
     } 
-  int n = fs_filesz(fd)-get_open_offset(fd); 
+  int n = fs_filesz(fd)-file_table[fd].open_offset; 
   if(n > len) { 
     n = len;
   }
-  ramdisk_read(buf, disk_offset(fd) + get_open_offset(fd), n);
-  set_open_offset(fd, get_open_offset(fd) + n);
+  ramdisk_read(buf, disk_offset(fd) + file_table[fd].open_offset, n);
+  file_table[fd].open_offset = file_table[fd].open_offset + n;
   Log("Read %s from %d. open_offset:%d,disk_offset:%d,len:%d",
       file_table[fd].name,
       file_table[fd].disk_offset + file_table[fd].open_offset,
