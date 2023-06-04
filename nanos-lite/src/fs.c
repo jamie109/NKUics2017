@@ -31,8 +31,13 @@ extern size_t events_read(void *buf, size_t len);
 void init_fs() {
   // TODO: initialize the size of /dev/fb
 }
-size_t fs_filesz(int fd){
+
+off_t fs_filesz(int fd){
   return file_table[fd].size;
+}
+
+off_t get_file_addr(int fd){
+  return file_table[fd].disk_offset;
 }
 
 int fs_open(const char* path, int flags, int mode){

@@ -8,6 +8,7 @@ int fs_open(const char* path, int flags, int mode);
 size_t fs_filesz(int fd);
 ssize_t fs_read(int fd, void* buf, size_t len);
 int fs_close(int fd);
+off_t get_file_addr(int fd);
 
 uintptr_t loader(_Protect *as, const char *filename) {
   //TODO();
@@ -16,23 +17,11 @@ uintptr_t loader(_Protect *as, const char *filename) {
 
   int fd = fs_open(filename, 0, 0);
   int f_size = fs_filesz(fd);
-
+  long addr = get_file_addr(fd);
   Log("Load %d bytes file, named %s, fd %d", f_size, filename, fd);
-  fs_read(fd, DEFAULT_ENTRY, f_size);
-  
+  fs_read(fd,(void *)addr , f_size);
+
   fs_close(fd);
-  // void* pa = DEFAULT_ENTRY;
-  // void* va = DEFAULT_ENTRY;
-  // Log(" ");
-  
-  // while(f_size > 0){
-  //   pa = new_page();
-  //   _map(as, va, pa);
-  //   fs_read(fd, pa, PGSIZE);
-  //   va += PGSIZE;
-  //   f_size -= PGSIZE;
-  // }
-  // fs_close(fd);
 
   return (uintptr_t)DEFAULT_ENTRY;
 }
