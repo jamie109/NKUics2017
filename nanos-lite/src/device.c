@@ -18,7 +18,9 @@ size_t events_read(void *buf, size_t len) {
       down = 1;
   }
   if(key != _KEY_NONE) {
-      sprintf(buffer, "%s %s\n", down ? "kd": "ku", keyname[key]);
+      if(down == 1)
+      //sprintf(buffer, "%s %s\n", down ? "kd": "ku", keyname[key]);
+      sprintf(buffer, "get %s\n", keyname[key]);
       //Log("receive %s",keyname[key]);
   }
   else {
