@@ -68,8 +68,8 @@ _RegSet* do_syscall(_RegSet *r) {
       sys_exit(r);
       break;
     case SYS_write:
-     SYSCALL_ARG1(r)=(int)sys_write(r);
-      sys_write(r);
+      SYSCALL_ARG1(r)=(int)sys_write(r);
+     // sys_write(r);
       break;
     case SYS_brk:
       SYSCALL_ARG1(r)=0;
