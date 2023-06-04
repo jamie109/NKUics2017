@@ -78,6 +78,10 @@ ssize_t fs_read(int fd, void* buf, size_t len){
   if(n > len) { 
     n = len;
   }
+  if(fd == FD_EVENTS) { 
+    return events_read(buf, len); 
+  }
+
   if(fd == FD_DISPINFO){
     dispinfo_read(buf, get_open_offset(fd), n);
   }
