@@ -27,9 +27,14 @@ extern void ramdisk_write(const void *buf, off_t offset, size_t len);
 extern void fb_write(const void *buf, off_t offset, size_t len);
 extern void dispinfo_read(void *buf, off_t offset, size_t len);
 extern size_t events_read(void *buf, size_t len);
-
+extern void getScreen(int *width, int *height) ;
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  int width = 0;
+  int height = 0;
+  getScreen(&width, &height);
+  file_table[FD_FB].size = width * height * sizeof(u_int32_t);
+  Log("set FD_FB size = %d", file_table[FD_FB].size);
 }
 //help functions
 size_t fs_filesz(int fd){
@@ -94,7 +99,13 @@ ssize_t fs_write(int fd, const void* buf, size_t len){
   if(n > len) {
     n = len;
   }
-  ramdisk_write(buf, file_table[fd].disk_offset + f_offset, n);
+  if(fd == FD_FB){
+    Log("FD_FB");
+    fb_write(buf, get_open_offset(fd), n);
+  }
+ else{
+    ramdisk_write(buf, file_table[fd].disk_offset + f_offset, n);
+ }
   file_table[fd].open_offset = f_offset + n;
 
   Log("Write %s. open_offset:%d,disk_offset:%d,len:%d",

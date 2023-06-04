@@ -47,3 +47,8 @@ int _read_key() {
   else   
     return _KEY_NONE;
 }
+//help function pa3
+void getScreen(int *width, int *height) { 
+  *width = _screen.width; 
+  *height = _screen.height;  
+}
