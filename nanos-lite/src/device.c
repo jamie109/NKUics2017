@@ -26,12 +26,12 @@ size_t events_read(void *buf, size_t len) {
       //Log("receive %s",keyname[key]);
   }
   else {
-    Log("time");
+    //Log("time");
       sprintf(buffer,"t %d\n", _uptime());
   }
   if(strlen(buffer) <= len) { 
     strncpy((char*)buf, buffer,strlen(buffer));
-    Log("ok");
+    //Log("ok");
     return strlen(buffer);
   } 
   Log("strlen(event)>len, return 0");
