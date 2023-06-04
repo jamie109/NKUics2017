@@ -18,15 +18,15 @@ int main() {
     if (key & 0x8000) {
       key ^= 0x8000;
       down = true;
-      printf("KEY\n");
+      //printf("KEY\n");
     }
     if (key != _KEY_NONE) {
       printf("Get key: %d %s %s\n", key, names[key], down ? "down" : "up");
     }
-    else
-    {
-      printf("no\n");
-    }
+    // else
+    // {
+    //   printf("no\n");
+    // }
     
   }
   return 0;
