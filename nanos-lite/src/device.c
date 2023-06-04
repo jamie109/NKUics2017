@@ -43,6 +43,7 @@ size_t events_read(void *buf, size_t len) {
   if(key == _KEY_NONE) {
     uint32_t ut = _uptime();
     sprintf(buf, "t %d\n", ut);
+    return 1;
   } 
   else {
     if (is_down)
@@ -51,10 +52,10 @@ size_t events_read(void *buf, size_t len) {
     {
       sprintf(buf, "%s %s\n", "ku", keyname[key]);
     }
-    
+    return strlen(buf);
   }
   
-  return strlen(buf);
+  
 }
 
 static char dispinfo[128] __attribute__((used));
