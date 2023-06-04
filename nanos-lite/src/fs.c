@@ -88,6 +88,7 @@ ssize_t fs_read(int fd, void* buf, size_t len){
       len);
   return n;
 }
+extern void fb_write(const void *buf, off_t offset, size_t len);
 
 ssize_t fs_write(int fd, const void* buf, size_t len){
   if(fd < 3) {
