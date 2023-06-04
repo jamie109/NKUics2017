@@ -31,13 +31,24 @@ extern size_t events_read(void *buf, size_t len);
 void init_fs() {
   // TODO: initialize the size of /dev/fb
 }
-
-off_t fs_filesz(int fd){
+//help functions
+size_t fs_filesz(int fd){
   return file_table[fd].size;
 }
 
-off_t get_file_addr(int fd){
+off_t disk_offset(int fd){
   return file_table[fd].disk_offset;
+}
+
+off_t get_open_offset(int fd){
+  return file_table[fd].open_offset;
+}
+
+void set_open_offset(int fd, off_t n){
+  if(n > file_table[fd].size) {
+    n = file_table[fd].size;
+    }
+  file_table[fd].open_offset = n;
 }
 
 int fs_open(const char* path, int flags, int mode){
@@ -53,56 +64,43 @@ int fs_open(const char* path, int flags, int mode){
 }
 
 ssize_t fs_read(int fd, void* buf, size_t len){
-  Log("fs_read fd=%d",fd);
-  if(fd>=NR_FILES)
-    assert(0);
-  if(fd < 3){
-    Log("fd(%d) < 3",fd);
-    return 0;
+  assert(fd >= 0 && fd < NR_FILES); 
+  if(fd < 3) { 
+    Log("arg invalid:fd<3"); 
+    return 0; 
+    } 
+  int n = fs_filesz(fd)-get_open_offset(fd); 
+  if(n > len) { 
+    n = len;
   }
-    
-  ssize_t f_size = fs_filesz(fd);
-  if(file_table[fd].open_offset + len >= f_size){
-    len = f_size - file_table[fd].open_offset;
-  }
-  ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
-  file_table[fd].open_offset += len;
-  Log("read finish");
-  return len;
+  ramdisk_read(buf, disk_offset(fd) + get_open_offset(fd), n);
+  set_open_offset(fd, get_open_offset(fd) + n);
+  Log("Read %s from %d. open_offset:%d,disk_offset:%d,len:%d",
+      file_table[fd].name,
+      file_table[fd].disk_offset + file_table[fd].open_offset,
+      file_table[fd].open_offset,
+      file_table[fd].disk_offset,
+      len);
+  return n;
 }
 
 ssize_t fs_write(int fd, const void* buf, size_t len){
-  // Log("write %s,open_offset:%d,disk_offset:%d,len:%d",
-  //     file_table[fd].name,
-  //     file_table[fd].open_offset,
-  //     file_table[fd].disk_offset,
-  //     len);
-  ssize_t f_size = fs_filesz(fd);
-  switch(fd){
-    case FD_STDOUT:
-    case FD_STDERR:{
-      // stdout stderr
-      for(int i=0;i<len;i++){
-        _putc(((char*)buf)[i]);
-      }
-      break;
-    }
-    case FD_FB:{
-      // frame buffer
-      fb_write(buf, file_table[fd].open_offset, len);
-      file_table[fd].open_offset+=len;
-      break;
-    }
-    default:{
-      if(file_table[fd].open_offset + len > f_size){
-        len = f_size - file_table[fd].open_offset;
-      }
-      ramdisk_write(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
-      file_table[fd].open_offset += len;
-      Log("write finish");
-      break;
-    }
+  if(fd < 3) {
+  Log("arg invalid:fd<3");
+  return 0;
   }
+  int n = fs_filesz(fd) - get_open_offset(fd);
+  if(n > len) {
+    n = len;
+  }
+  ramdisk_write(buf, disk_offset(fd) + get_open_offset(fd), n);
+  set_open_offset(fd, get_open_offset(fd) + n);
+
+  Log("Write %s. open_offset:%d,disk_offset:%d,len:%d",
+      file_table[fd].name,
+      file_table[fd].open_offset,
+      file_table[fd].disk_offset,
+      len);
   return len;
 }
 
@@ -110,38 +108,25 @@ int fs_close(int fd){
   Log("Close %s with fd:%d..",
     file_table[fd].name,
     fd);
-  file_table[fd].open_offset = 0;
+  assert(fd >= 0 && fd < NR_FILES);
+  //file_table[fd].open_offset = 0;
   return 0;
 }
 
 off_t fs_lseek(int fd, off_t offset, int whence){
-  off_t ret = -1;
-  switch(whence){
-    case SEEK_SET:{
-      if(offset>=0 && offset<=file_table[fd].size){
-        file_table[fd].open_offset = offset;
-        ret = file_table[fd].open_offset;
-      }
-      break;
-    }
-    case SEEK_CUR:{
-      if(offset+file_table[fd].open_offset>=0 && offset+file_table[fd].open_offset<=file_table[fd].size){
-        file_table[fd].open_offset += offset;
-        ret = file_table[fd].open_offset;
-      }
-      break;
-    }
-    case SEEK_END:{
-      file_table[fd].open_offset = file_table[fd].size + offset;
-      ret = file_table[fd].open_offset;
-      break;
-    }
-    default:{
-      Log("undefined whence..");
-      assert(0);
-    }
+  switch(whence) {
+    case SEEK_SET:
+      set_open_offset(fd, offset);
+      return get_open_offset(fd);
+    case SEEK_CUR:
+      set_open_offset(fd, get_open_offset(fd) + offset);
+      return get_open_offset(fd);
+    case SEEK_END:
+      set_open_offset(fd, fs_filesz(fd) + offset);
+      return get_open_offset(fd);
+    default:
+      panic("Unhandled whence ID = %d", whence);
+      return -1;
   }
-  Log("finish fs_lseek fd=%d",
-    fd);
-  return ret;
+  Log("fs_lseek");
 }
