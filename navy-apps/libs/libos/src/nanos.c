@@ -30,8 +30,19 @@ int _write(int fd, void *buf, size_t count){
   //_exit(SYS_write);
 }
 
+extern char _end;
+static intptr_t brk = (intptr_t)&_end;//记录开始位置
 void *_sbrk(intptr_t increment){
-  return (void *)-1;
+  intptr_t ori_brk = brk;
+  intptr_t new_brk = ori_brk + increment;//增加后的位置
+
+  if(_syscall_(SYS_brk, new_brk, 0, 0) == 0){// 系统调用
+    brk = new_brk;
+    return (void*) ori_brk;//旧 program break 的位置
+  }
+  else 
+    return (void *)-1;
+  //return (void *)-1;
 }
 
 int _read(int fd, void *buf, size_t count) {
