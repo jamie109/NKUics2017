@@ -110,6 +110,7 @@ int fs_close(int fd){
   Log("Close %s with fd:%d..",
     file_table[fd].name,
     fd);
+  file_table[fd].open_offset = 0;
   return 0;
 }
 
