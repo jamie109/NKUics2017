@@ -67,7 +67,7 @@ int fs_open(const char* path, int flags, int mode){
   assert(0);
   return -1;
 }
-
+void dispinfo_read(void *buf, off_t offset, size_t len);
 ssize_t fs_read(int fd, void* buf, size_t len){
   assert(fd >= 0 && fd < NR_FILES); 
   if(fd < 3) { 
@@ -78,7 +78,11 @@ ssize_t fs_read(int fd, void* buf, size_t len){
   if(n > len) { 
     n = len;
   }
-  ramdisk_read(buf, disk_offset(fd) + file_table[fd].open_offset, n);
+  if(fd == FD_DISPINFO){
+    dispinfo_read(buf, get_open_offset(fd), n);
+  }
+  else
+    ramdisk_read(buf, disk_offset(fd) + file_table[fd].open_offset, n);
   file_table[fd].open_offset = file_table[fd].open_offset + n;
   Log("Read %s from %d. open_offset:%d,disk_offset:%d,len:%d",
       file_table[fd].name,
@@ -91,6 +95,13 @@ ssize_t fs_read(int fd, void* buf, size_t len){
 extern void fb_write(const void *buf, off_t offset, size_t len);
 
 ssize_t fs_write(int fd, const void* buf, size_t len){
+  if(fd == FD_STDERR){
+      // stdout stderr
+      for(int i=0;i<len;i++){
+        _putc(((char*)buf)[i]);
+      }
+      return len;
+  }
   if(fd < 3 || fd == FD_DISPINFO) {
   Log("arg invalid:fd<3");
   return 0;
