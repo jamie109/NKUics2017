@@ -41,13 +41,10 @@ void _draw_sync() {
 }
 
 int _read_key() {
-  #define I8042_DATA_PORT 0x60
-  #define I8042_STATUS_PORT 0x64
   //return _KEY_NONE;
-  //if(inb(0x64))  { 
-  if(inb(I8042_STATUS_PORT) & 0x1){
+  if(inb(0x64))  { 
     //printf("a key\n");
-    return inl(I8042_DATA_PORT);
+    return inl(0x60);
   }
   else   
     return _KEY_NONE;
