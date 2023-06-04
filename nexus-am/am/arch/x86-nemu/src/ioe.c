@@ -43,17 +43,10 @@ void _draw_sync() {
 #define I8042_DATA_PORT 0x60
 #define I8042_STATUS_PORT 0x64
 int _read_key() {
-  // //return _KEY_NONE;
-  // if(inb(0x64))  { 
-  //   //printf("a key\n");
-  //   return inl(0x60);
-  // }
-  // else   
-  //   return _KEY_NONE;
-  uint32_t key_code = _KEY_NONE;
-  if (inb(I8042_STATUS_PORT) )
-    key_code = inl(I8042_DATA_PORT);
-  return key_code;
+  if(inb(0x64))
+  {   return inl(0x60);}
+  else
+  {   return _KEY_NONE;}
 }
 //help function pa3
 void getScreen(int *width, int *height) { 
