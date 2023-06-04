@@ -41,9 +41,10 @@ off_t get_file_addr(int fd){
 }
 
 int fs_open(const char* path, int flags, int mode){
-  Log("[fs_open]Pathname: %s", path);
+  Log("Pathname: %s", path);
   for(int i = 0; i<NR_FILES; i++){
     if(strcmp(file_table[i].name, path) == 0){
+      Log("find it, i=%d",i);
       return i;
     }
   }
@@ -73,7 +74,7 @@ ssize_t fs_read(int fd, void* buf, size_t len){
       break;
     }
     default:{
-      Log("[fs_read]read %s from %d,open_offset:%d,disk_offset:%d,len:%d",
+      Log("read %s from %d,open_offset:%d,disk_offset:%d,len:%d",
       file_table[fd].name,
       file_table[fd].disk_offset + file_table[fd].open_offset,
       file_table[fd].open_offset,
@@ -81,7 +82,7 @@ ssize_t fs_read(int fd, void* buf, size_t len){
       len);
       ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
       file_table[fd].open_offset += len;
-      Log("[fs_read]read finish");
+      Log("read finish");
       break;
     }
   }
@@ -109,14 +110,14 @@ ssize_t fs_write(int fd, const void* buf, size_t len){
       if(file_table[fd].open_offset + len > f_size){
         len = f_size - file_table[fd].open_offset;
       }
-      Log("[fs_write]write %s,open_offset:%d,disk_offset:%d,len:%d",
+      Log("write %s,open_offset:%d,disk_offset:%d,len:%d",
       file_table[fd].name,
       file_table[fd].open_offset,
       file_table[fd].disk_offset,
       len);
       ramdisk_write(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
       file_table[fd].open_offset += len;
-      Log("[fs_write]write finish");
+      Log("write finish");
       break;
     }
   }
@@ -124,7 +125,7 @@ ssize_t fs_write(int fd, const void* buf, size_t len){
 }
 
 int fs_close(int fd){
-  Log("[fs_close]Closing %s with fd:%d..",
+  Log("Close %s with fd:%d..",
     file_table[fd].name,
     fd);
   return 0;

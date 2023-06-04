@@ -17,9 +17,9 @@ uintptr_t loader(_Protect *as, const char *filename) {
 
   int fd = fs_open(filename, 0, 0);
   int f_size = fs_filesz(fd);
-  long addr = get_file_addr(fd);
+  //long addr = get_file_addr(fd);
   Log("Load %d bytes file, named %s, fd %d", f_size, filename, fd);
-  fs_read(fd,(void *)addr , f_size);
+  fs_read(fd,(void *)DEFAULT_ENTRY, f_size);
 
   fs_close(fd);
 
