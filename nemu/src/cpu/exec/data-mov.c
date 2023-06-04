@@ -32,7 +32,7 @@ make_EHelper(pusha) {
   rtl_push(&cpu.ebp);
   rtl_push(&cpu.esi);
   rtl_push(&cpu.edi);
-  printf("pusha end\n");
+  //printf("pusha end\n");
   print_asm("pusha");
 }
 
@@ -46,7 +46,7 @@ make_EHelper(popa) {
   rtl_pop(&cpu.edx);
   rtl_pop(&cpu.ecx);
   rtl_pop(&cpu.eax);
-  printf("popa end\n");
+  //printf("popa end\n");
   print_asm("popa");
 }
 
