@@ -87,7 +87,8 @@ static inline void restart() {
   memcpy(&cpu.eflags,&origin,sizeof(cpu.eflags));
   //pa3
   cpu.cs = 8;//cs寄存器需要初始化为8
-
+  //pa4
+  cpu.CR0 = 0x60000011;
 #ifdef DIFF_TEST
   init_qemu_reg();
 #endif

@@ -2,7 +2,7 @@
 
 /* Uncomment these macros to enable corresponding functionality. */
 #define HAS_ASYE
-//#define HAS_PTE
+#define HAS_PTE //pa4 open define
 
 void init_mm(void);
 void init_ramdisk(void);
