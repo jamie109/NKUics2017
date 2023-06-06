@@ -62,7 +62,7 @@ int fs_open(const char* path, int flags, int mode){
     if(strcmp(file_table[i].name, path) == 0){
      // Log("find it, i=%d",i);
       return i;
-      printf("i\n");
+      //printf("i\n");
     }
   }
   assert(0);
@@ -117,7 +117,7 @@ ssize_t fs_write(int fd, const void* buf, size_t len){
     n = len;
   }
   if(fd == FD_FB){
-    Log("FD_FB");
+    //Log("FD_FB");
     fb_write(buf, get_open_offset(fd), n);
   }
  else{
