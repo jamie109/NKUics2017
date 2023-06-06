@@ -60,7 +60,8 @@ make_EHelper(int);
 make_EHelper(pusha);
 make_EHelper(popa);
 make_EHelper(iret);
-
+//pa4
+make_EHelper(mov_store_cr);
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
 

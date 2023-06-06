@@ -121,3 +121,8 @@ make_EHelper(lea) {
   //printf("exec_lae end\n");
   print_asm_template2(lea);
 }
+//pa4
+make_EHelper(mov_store_cr) {
+  rtl_store_cr(id_dest -> reg, &id_src -> val);
+  print_asm_template2(mov);
+}
