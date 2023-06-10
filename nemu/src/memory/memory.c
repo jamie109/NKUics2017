@@ -2,6 +2,7 @@
 #include "device/mmio.h"
 #define PMEM_SIZE (128 * 1024 * 1024)
 //pa4
+#include "memory/mmu.h"
 #define PTXSHFT 12 //线性地址偏移量
 #define PDXSHFT 22 //线性地址偏移量 
 
@@ -37,6 +38,31 @@ void paddr_write(paddr_t addr, int len, uint32_t data) {
     memcpy(guest_to_host(addr), &data, len);
   else
     mmio_write(addr,len,data,r);
+}
+//pa4 add
+paddr_t page_translate(vaddr_t addr, bool iswrite) {
+  CR0 cr0 = (CR0)cpu.CR0;
+  if(cr0.paging && cr0.protect_enable) {
+    CR3 crs = (CR3)cpu.CR3;
+
+    PDE *pgdirs = (PDE*)PTE_ADDR(crs.val);
+    PDE pde = (PDE)paddr_read((uint32_t)(pgdirs + PDX(addr)), 4);
+
+    PTE *ptable = (PTE*)PTE_ADDR(pde.val);
+    PTE pte = (PTE)paddr_read((uint32_t)(ptable + PTX(addr)), 4);
+    //printf("hhahah%x, jhhh%x\n", pte.present, addr);
+    Assert(pte.present, "addr=0x%x", addr);
+
+    pde.accessed=1;
+    pte.accessed=1;
+    if(iswrite) {
+      pte.dirty=1;
+    }
+    paddr_t paddr = PTE_ADDR(pte.val) | OFF(addr);
+    printf("vaddr=0x%x\tpaddr=0x%x\n", addr, paddr);
+    return paddr;
+  }
+	return addr;
 }
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
