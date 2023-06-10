@@ -68,7 +68,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
   //return paddr_read(addr, len);
   if(PTE_ADDR(addr) != PTE_ADDR(addr + len -1)) {
     printf("data cross the page boundary [addr=0x%x, len=%d]\n", addr, len);
-    //assert(0);
+    assert(0);
     int num1 = 0x1000 - OFF(addr);
     int num2 = len - num1;
     paddr_t paddr1 = page_translate(addr, false);
@@ -89,7 +89,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
   if(PTE_ADDR(addr) != PTE_ADDR(addr + len -1)){
     printf("data cross the page boundary [addr=0x%x, len=%d]\n", addr, len);
-    //assert(0);
+    assert(0);
     int num1 = 0x1000-OFF(addr);
       int num2 = len -num1;
       paddr_t paddr1 = page_translate(addr, true);
