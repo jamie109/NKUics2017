@@ -59,12 +59,11 @@ paddr_t page_translate(vaddr_t addr, bool iswrite) {
       pte.dirty=1;
     }
     paddr_t paddr = PTE_ADDR(pte.val) | OFF(addr);
-    Log("vaddr=0x%x\tpaddr=0x%x", addr, paddr);
+    //Log("vaddr=0x%x\tpaddr=0x%x", addr, paddr);
     return paddr;
   }
 	return addr;
 }
-
 uint32_t vaddr_read(vaddr_t addr, int len) {
   //return paddr_read(addr, len);
   if(PTE_ADDR(addr) != PTE_ADDR(addr + len -1)) {
