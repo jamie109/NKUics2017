@@ -43,9 +43,9 @@ void paddr_write(paddr_t addr, int len, uint32_t data) {
 paddr_t page_translate(vaddr_t addr, bool iswrite) {
   CR0 cr0 = (CR0)cpu.CR0;
   if(cr0.paging && cr0.protect_enable) {
-    CR3 crs = (CR3)cpu.CR3;
+    CR3 cr3 = (CR3)cpu.CR3;
 
-    PDE *pgdirs = (PDE*)PTE_ADDR(crs.val);
+    PDE *pgdirs = (PDE*)PTE_ADDR(cr3.val);
     PDE pde = (PDE)paddr_read((uint32_t)(pgdirs + PDX(addr)), 4);
 
     PTE *ptable = (PTE*)PTE_ADDR(pde.val);

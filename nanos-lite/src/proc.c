@@ -10,7 +10,7 @@ uintptr_t loader(_Protect *as, const char *filename);
 
 void load_prog(const char *filename) {
   int i = nr_proc ++;
-  _protect(&pcb[i].as);
+  _protect(&pcb[i].as);//创建一个 用户进程的虚拟地址空间,
 
   uintptr_t entry = loader(&pcb[i].as, filename);
 
