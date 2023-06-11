@@ -12,7 +12,7 @@ typedef struct {
 #define EXW(ex, w)         {NULL, concat(exec_, ex), w}//执行函数ex和宽度w的指令条目
 #define EX(ex)             EXW(ex, 0)
 #define EMPTY              EX(inv)
-
+#define TIME_IRQ 32
 static inline void set_width(int width) {
   /*
   根据decoding中存储的 is_operand_size_16 标志来决定指令宽度是2个字节（16位）还是4个字节（32位）。
@@ -270,9 +270,11 @@ void exec_wrapper(bool print_flag) {
   void difftest_step(uint32_t);
   difftest_step(eip);
 #endif
-// if(cpu.INTR & cpu.IF){
-//   cpu.INTR = false;
-//   raise_intr(TIMER_IRQ, cpu.eip);
-//   update_eip();
-// }
+//pa4
+if(cpu.INTR & cpu.eflags.IF) {
+    cpu.INTR = false;
+    extern void raise_intr(uint8_t NO, vaddr_t ret_addr);
+    raise_intr(TIME_IRQ, cpu.eip);
+    update_eip();
+  }
 }

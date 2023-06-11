@@ -67,6 +67,7 @@ union{//add union for pa3
   //pa4 add
   uint32_t CR0;
   uint32_t CR3;
+  bool INTR;
 } CPU_state;
 
 extern CPU_state cpu;
