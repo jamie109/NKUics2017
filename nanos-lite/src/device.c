@@ -19,7 +19,12 @@ size_t events_read(void *buf, size_t len) {
       down = 1;
   }
   //sprintf(buffer, "get %s\n", keyname[key]);
-  
+  //pa4
+  if(down && key == _KEY_F12) {
+    extern void switch_current_game();
+    switch_current_game();
+    Log("key down:_KEY_F12, switch current game0!");
+  }
   if(key != 0) {
       //if(down == 1)
       //printf("get key\n");
