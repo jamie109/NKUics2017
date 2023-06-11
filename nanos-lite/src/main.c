@@ -41,6 +41,6 @@ int main() {
   //load_prog("/bin/dummy");
   //load_prog("/bin/hello");
   load_prog("/bin/pal");
-  
+  _trap();
   panic("Should not reach here");
 }
