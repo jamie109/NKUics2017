@@ -138,7 +138,7 @@ int fs_close(int fd){
     file_table[fd].name,
     fd);
   assert(fd >= 0 && fd < NR_FILES);
-  //file_table[fd].open_offset = 0;
+  file_table[fd].open_offset = 0;
   return 0;
 }
 
