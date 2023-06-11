@@ -38,8 +38,8 @@ int main() {
   //uint32_t entry = loader(NULL, "/bin/pal");
   //((void (*)(void))entry)();
   //pa4
-  //load_prog("/bin/dummy");
-  load_prog("/bin/hello");
+  load_prog("/bin/dummy");
+  //load_prog("/bin/hello");
   //load_prog("/bin/videotest");
   
   panic("Should not reach here");
