@@ -1,5 +1,6 @@
 #include "common.h"
 _RegSet* do_syscall(_RegSet *r);
+extern _RegSet* schedule(_RegSet *prev);
 static _RegSet* do_event(_Event e, _RegSet* r) {
   // switch (e.event) {
   //   default: panic("Unhandled event ID = %d", e.event);
@@ -10,7 +11,8 @@ static _RegSet* do_event(_Event e, _RegSet* r) {
       break;
     case _EVENT_TRAP:
       printf("this is self-trap\n"); 
-      break;
+      //break;
+      return schedule(r);
     default: panic("Unhandled event ID = %d", e.event);
   }
   return NULL;
