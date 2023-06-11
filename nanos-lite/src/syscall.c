@@ -56,6 +56,10 @@ static inline int sys_lseek(_RegSet *r) {
   return fs_lseek(fd,offset,whence);
   //return NULL;
 }
+static inline int sys_brk(int addr) {
+  extern int mm_brk(uint32_t new_brk);
+  return mm_brk(addr);
+}
 _RegSet* do_syscall(_RegSet *r) {
   uintptr_t a[4];
   a[0] = SYSCALL_ARG1(r);
@@ -77,7 +81,8 @@ _RegSet* do_syscall(_RegSet *r) {
      // sys_write(r);
       break;
     case SYS_brk:
-      SYSCALL_ARG1(r)=0;
+      //SYSCALL_ARG1(r)=0;
+      SYSCALL_ARG1(r) = sys_brk(a[1]);
       break;
     case SYS_open:
       SYSCALL_ARG1(r)=sys_open(a[1],a[2],a[3]);
