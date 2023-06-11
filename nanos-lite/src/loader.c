@@ -20,8 +20,20 @@ uintptr_t loader(_Protect *as, const char *filename) {
   int f_size = fs_filesz(fd);
   //long addr = get_file_addr(fd);
   Log("Load %d bytes file, named %s, fd %d", f_size, filename, fd);
-  fs_read(fd,(void *)DEFAULT_ENTRY, f_size);
-
+  //fs_read(fd,(void *)DEFAULT_ENTRY, f_size);
+  //pa4
+  int ppnum = f_size / PGSIZE;
+  if(f_size % PGSIZE != 0) {
+    ppnum++;
+  }
+  void *pa = NULL;
+  void *va = DEFAULT_ENTRY;
+  for(int i = 0; i < ppnum; i++) {
+    pa = new_page();
+    _map(as, va, pa);
+    fs_read(fd, pa, PGSIZE);
+    va += PGSIZE;
+  }
   fs_close(fd);
 
   return (uintptr_t)DEFAULT_ENTRY;
