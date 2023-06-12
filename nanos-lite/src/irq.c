@@ -15,7 +15,7 @@ static _RegSet* do_event(_Event e, _RegSet* r) {
       //break;
       return schedule(r);
     case _EVENT_IRQ_TIME: 
-      Log("this is _EVENT_IRQ_TIME"); 
+      //Log("this is _EVENT_IRQ_TIME"); 
       return schedule(r);
     default: panic("Unhandled event ID = %d", e.event);
   }
