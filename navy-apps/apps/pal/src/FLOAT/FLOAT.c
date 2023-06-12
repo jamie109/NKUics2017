@@ -67,8 +67,12 @@ FLOAT f2F(float a) {
 }
 
 FLOAT Fabs(FLOAT a) {
-  assert(0);
-  return 0;
+  // assert(0);
+  // return 0;
+  if ((a & 0x80000000) == 0)
+    return a;
+  else
+    return -a;
 }
 
 /* Functions below are already implemented */
