@@ -32,15 +32,16 @@ void switch_current_game() {
 }
 _RegSet* schedule(_RegSet *prev) {
   // //return NULL;
-  // if(current != NULL) {
-  //   current -> tf = prev;
-  // }
-  // //current = &pcb[0];
+  if(current != NULL) {
+    current -> tf = prev;
+  }
+  current = &pcb[0];
   // current = (current == &pcb[0]? &pcb[1] : &pcb[0]);
   // //Log("ptr = 0x%x\n", (uint32_t)current -> as.ptr); 
-  // _switch(&current -> as); 
-  // return current -> tf;
+  _switch(&current -> as); 
+  return current -> tf;
   //pa4 优先级调度
+  /*
   if(current != NULL) {
     current -> tf = prev;
   }
@@ -63,4 +64,5 @@ _RegSet* schedule(_RegSet *prev) {
   // Log("ptr = 0x%x\n", (uint32_t)current -> as.ptr);
   _switch(&current -> as);
   return current -> tf;
+  */
 }
