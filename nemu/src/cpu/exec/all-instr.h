@@ -64,7 +64,9 @@ make_EHelper(iret);
 make_EHelper(mov_store_cr);
 make_EHelper(call_rm);
 make_EHelper(jmp_rm);
-
+//pa5
+make_EHelper(shrd); 
+make_EHelper(shld);
 
 make_EHelper(div);
 make_EHelper(idiv);

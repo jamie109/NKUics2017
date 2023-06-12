@@ -48,7 +48,7 @@ _RegSet* schedule(_RegSet *prev) {
     current = &pcb[current_game];
   }
   static int num = 0;
-  static const int frequency = 2500;
+  static const int frequency = 5000;
   if(current == &pcb[current_game]) {
     num++;
   }
