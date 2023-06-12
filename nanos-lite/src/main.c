@@ -40,7 +40,7 @@ int main() {
   //pa4
   //load_prog("/bin/dummy");
   
-  load_prog("/bin/nwm"); 
+  load_prog("/bin/nterm"); 
   load_prog("/bin/hello");
   //load_prog("/bin/videotest");
   
